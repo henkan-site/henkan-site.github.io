@@ -22,9 +22,17 @@
     table th, table td {
       border: dashed 1px;
     }
+    textarea{
+      width:100%;
+      padding: 1em;
+      margin:0;
+    }
     @media screen and (min-width: 481px) {
       body{ 
         width:800px;
+      }
+      textarea{
+        max-width: 100%;
       }
     }
     @media screen and (max-width: 480px) {
@@ -32,11 +40,8 @@
         width:90%;
       }
       textarea{
-        width:100%;
-        box-sizing:border-box;border:none;
-        background: #d6ffff;
-        padding: 1em;
-        margin:0;
+        box-sizing:border-box;
+        border:none;
       }
     }
   </style>
@@ -47,12 +52,12 @@
   <p>貼り付けられたテキスト（タブ区切り）をHTMLのテーブルに変換</p>
   <p>
   【入力】
-  <textarea id="input" rows="16" style="width: 100%; max-width: 100%;" placeholder="Excelなどでコピーしたテキストデータ（タブ区切り）を貼り付けてください。"></textarea>
+  <textarea id="input" rows="16" style="width: 100%; " placeholder="Excelなどでコピーしたテキストデータ（タブ区切り）を貼り付けてください。"></textarea>
   <button onclick="ClearTextarea()">Clear</button>
   </p>
   <p>
   【出力】
-  <textarea readonly id="output" rows="16" style="width: 100%; max-width: 100%;"></textarea>
+  <textarea readonly id="output" rows="16" style=""></textarea>
   <button onclick="CopyToClipboard()">Copy text</button>
   </p>
   <p>
