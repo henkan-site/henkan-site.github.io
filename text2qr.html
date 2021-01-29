@@ -89,7 +89,8 @@
     }
     function ClearTextarea() {
       input.value = "";
-      output.textContent = "";
+      output.width = 0;
+      output.height = 0;
       input.focus();
     }
     function Save() {
