@@ -60,13 +60,13 @@
   <p>
   【入力】
   <textarea id="input" placeholder="Excelなどでコピーしたテキストデータ（タブ区切り）を貼り付けてください。"></textarea>
-  <button onclick="paste()">Paste</button>
-  <button onclick="clear()">Clear</button>
+  <button onclick="pasteTextarea()">Paste</button>
+  <button onclick="clearTextarea()">Clear</button>
   </p>
   <p>
   【出力】
   <textarea readonly id="output"></textarea>
-  <button onclick="copy()">Copy</button>
+  <button onclick="copyTextarea()">Copy</button>
   </p>
   <p>
   【プレビュー】
@@ -114,17 +114,17 @@
       output.textContent = result;
       preview.innerHTML = output.textContent;
     });
-    function paste() {
+    function pasteTextarea() {
       input.focus();
       document.execCommand("paste");
     }
-    function copy() {
+    function copyTextarea() {
       var copyText = document.getElementById("output");
       copyText.select();
       copyText.setSelectionRange(0, 99999);
       document.execCommand("copy");
     }
-    function clear() {
+    function clearTextarea() {
       input.value = "";
       output.textContent = "";
       preview.innerHTML = "";
