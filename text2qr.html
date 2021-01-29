@@ -77,8 +77,18 @@
     const output = document.getElementById('output');
     input.addEventListener('input', function (e) {
       var text = e.target.value;
-      writeQr(output, input.value.trim());
+      if (!str) {
+        clearQr();
+      } else {
+        writeQr(output, input.value.trim());
+      }
     });
+    function clearQr(){
+      output.width = 0;
+      output.height = 0;
+      output.style.width = "0px";
+      output.style.height = "0px";
+    }
     function writeQr(canvas, data){
       return new Promise((res, rej)=>{
           QRCode.toCanvas(canvas, data, {
@@ -89,10 +99,7 @@
     }
     function ClearTextarea() {
       input.value = "";
-      output.width = 0;
-      output.height = 0;
-      output.style.width = "0px";
-      output.style.height = "0px";
+      clearQr();
       input.focus();
     }
     function Save() {
