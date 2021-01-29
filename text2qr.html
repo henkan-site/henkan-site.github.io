@@ -64,17 +64,16 @@
   <button onclick="ClearTextarea()">Clear</button>
   </p>
   <p>
-  【出力】
-  <div>
-  <canvas id="output"></canvas>
-  <button onclick="Save()">保存</button>
-  </div>
+  【出力】<br>
+  <canvas id="output" width="0" height="0"></canvas><br>
+  <button id="save" onclick="Save()" style="display:none">保存</button>
   </p>
   <hr>
   ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" id="footer_link">henkan.site</a>&nbsp;<a href="https://henkan.site/privacy.html" id="footer_link">プライバシー</a>
   <script>
     const input = document.getElementById('input');
     const output = document.getElementById('output');
+    const save = document.getElementById('save');
     input.addEventListener('input', function (e) {
       var text = e.target.value;
       if (!text) {
@@ -88,8 +87,10 @@
       output.height = 0;
       output.style.width = "0px";
       output.style.height = "0px";
+      save.style.display = "none";
     }
     function writeQr(canvas, data){
+      save.style.display = "";
       return new Promise((res, rej)=>{
           QRCode.toCanvas(canvas, data, {
               margin: 2,
