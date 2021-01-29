@@ -65,8 +65,10 @@
   </p>
   <p>
   【出力】
+  <div>
   <canvas id="output"></canvas>
   <button onclick="Save()">保存</button>
+  </div>
   </p>
   <hr>
   ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" id="footer_link">henkan.site</a>&nbsp;<a href="https://henkan.site/privacy.html" id="footer_link">プライバシー</a>
@@ -80,7 +82,7 @@
     function writeQr(canvas, data){
       return new Promise((res, rej)=>{
           QRCode.toCanvas(canvas, data, {
-              margin: 10,
+              margin: 2,
               scale: 4
           }, (err, tg) => !err ? res(tg) : rej(err));
       });
