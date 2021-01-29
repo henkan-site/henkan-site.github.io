@@ -61,7 +61,8 @@
   <p>
   【入力】
   <textarea id="input" placeholder="テキストを貼り付けてください。"></textarea>
-  <button onclick="ClearTextarea()">Clear</button>
+  <button onclick="paste()">Paste</button>
+  <button onclick="clear()">Clear</button>
   </p>
   <p>
   【出力】<br>
@@ -98,7 +99,11 @@
           }, (err, tg) => !err ? res(tg) : rej(err));
       });
     }
-    function ClearTextarea() {
+    function paste() {
+      input.focus();
+      document.execCommand("paste");
+    }
+    function clear() {
       input.value = "";
       clearQr();
       input.focus();
