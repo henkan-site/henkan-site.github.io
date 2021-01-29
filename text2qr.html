@@ -77,7 +77,7 @@
     const output = document.getElementById('output');
     input.addEventListener('input', function (e) {
       var text = e.target.value;
-      if (!str) {
+      if (!text) {
         clearQr();
       } else {
         writeQr(output, input.value.trim());
