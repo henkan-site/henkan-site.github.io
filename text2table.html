@@ -115,6 +115,7 @@
       preview.innerHTML = output.textContent;
     });
     function pasteTextarea() {
+      input.value = "";
       input.focus();
       document.execCommand("paste");
     }
