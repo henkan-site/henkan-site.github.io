@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>変換サイト - 貼り付けられたテキストをHTMLのテーブルに変換</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+  <meta name="description" content="貼り付けられたテキストをHTMLのテーブルに変換します。" />
+  <style type="text/css">
+    body{ 
+      background-color:#eeeeee;
+      color:#000000;
+      margin-right:auto;
+      margin-left:auto;
+      width:800px;
+    }
+    #title{
+      color:#000000;
+      text-decoration:none;
+    }
+    table{
+      border-collapse: collapse;
+      border: dashed 1px;
+    }
+    table th, table td {
+      border: dashed 1px;
+    }
+  </style>
+</head>
+<body>
+  <a href="https://henkan.site/" id="title"><h1>変換サイト</h1></a>
+  <hr>
+  <p>貼り付けられたテキスト（タブ区切り）をHTMLのテーブルに変換</p>
+  <p>
+  【入力】
+  <textarea id="input" rows="16" style="width: 100%; max-width: 100%;" placeholder="Excelなどでコピーしたテキストデータ（タブ区切り）を貼り付けてください。"></textarea>
+  <button onclick="ClearTextarea()">Clear</button>
+  </p>
+  <p>
+  【出力】
+  <textarea readonly id="output" rows="16" style="width: 100%; max-width: 100%;"></textarea>
+  <button onclick="CopyToClipboard()">Copy text</button>
+  </p>
+  <p>
+  【プレビュー】
+  <span id="preview"></span>
+  </p>
+  <hr>
+  © <span id="year"></span> henkan.site
+  <script>
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+    const preview = document.getElementById('preview');
+    input.addEventListener('keydown', function (e) {
+      var elem, end, start, value;
+      if (e.keyCode === 9) {
+        if (e.preventDefault) {
+          e.preventDefault();
+        }
+        elem = e.target;
+        start = elem.selectionStart;
+        end = elem.selectionEnd;
+        value = elem.value;
+        elem.value = "" + (value.substring(0, start)) + "\t" + (value.substring(end));
+        elem.selectionStart = elem.selectionEnd = start + 1;
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('input', true, true);
+        e.target.dispatchEvent(event);
+        return false;
+      }
+    });
+    input.addEventListener('input', function (e) {
+      var result = e.target.value;
+      result = result.replace(/[&'`"<>]/g, function(match) {
+          return {
+            '&': '&amp;',
+            "'": '&#x27;',
+            '`': '&#x60;',
+            '"': '&quot;',
+            '<': '&lt;',
+            '>': '&gt;',
+          }[match]
+        });
+      result = result.replace( /\t/gim , "</td><td>" );
+      result = result.replace( /^(.+?)$/gim , "<tr><td>$1</td></tr>" );
+      result = "<table>\n" + result + "</table>";
+      output.textContent = result;
+      preview.innerHTML = output.textContent;
+    });
+    function CopyToClipboard() {
+      var copyText = document.getElementById("output");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+    }
+    function ClearTextarea() {
+      input.value = "";
+      output.textContent = "";
+      preview.innerHTML = "";
+    }
+    var date = new Date();
+    var yyyy = date.getFullYear();
+    document.getElementById("year").innerHTML = yyyy;
+  </script>
+</body>
+</html>
