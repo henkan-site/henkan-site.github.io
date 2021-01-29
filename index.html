@@ -17,6 +17,11 @@
   <hr>
   <p>さて、何を変換しようか？</p>
   <hr>
-  © 2021 henkan.site
+  © <div id="year"></div> henkan.site
+  <script>
+    var date = new Date();
+    var yyyy = date.getFullYear();
+    document.getElementById("year").innerHTML = yyyy;
+  </script>
 </body>
 </html>
