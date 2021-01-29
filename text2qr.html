@@ -80,7 +80,7 @@
     function writeQr(canvas, data){
       return new Promise((res, rej)=>{
           QRCode.toCanvas(canvas, data, {
-              margin: 0,
+              margin: 10,
               scale: 4
           }, (err, tg) => !err ? res(tg) : rej(err));
       });
@@ -88,7 +88,6 @@
     function ClearTextarea() {
       input.value = "";
       output.textContent = "";
-      preview.innerHTML = "";
       input.focus();
     }
     function Save() {
@@ -97,8 +96,8 @@
         window.navigator.msSaveBlob(blob, 'qrcode.png');
       } else {
         var a = document.createElement('a');
-        a.href = output.toDataURL('image/jpeg');
-        a.download = 'qrcode.jpg';
+        a.href = output.toDataURL('image/png');
+        a.download = 'qrcode.png';
         a.click();
       }    
     }
