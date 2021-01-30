@@ -84,6 +84,14 @@
       for(var i = 0; i < lines.length; i++) {
         var line = lines[i];
         line = line.replace("-", "");
+        if (!numCheck(line)) {
+          output.value += "半角数値を入力してください\n";
+          continue;
+        }
+        if (!checksum(line)) {
+          output.value += "チェックデジット失敗\n";
+          continue;
+        }
         switch (true) {
         case /4\\d{12}(?:\\d{3})?/.test(line):
           output.value += "visa\n";
@@ -109,6 +117,21 @@
         }
       }
     });
+    function numCheck(number) {
+       if (number.match(/[^z0-9]+/)) {
+         return false;
+       }
+    }
+    function checksum(number) {
+      var a, s, i, x;
+      a = number.split("").reverse();
+      s = 0;
+      for (i = 0; i < a.length; i++) {
+        x = a[i] * (1 + i % 2);
+        s += x > 9 ? x - 9 : x;
+      }
+      return s % 10 == 0;
+    }
     function pasteTextarea() {
       input.value = "";
       input.focus();
