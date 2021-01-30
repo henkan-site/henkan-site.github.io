@@ -92,7 +92,7 @@
         return Function('"use strict";return (' + obj + ')')();
     }    
     function inputCheck(number) {
-       return !number.match(/[^z0-9\+\-\*\/\(\)]+/);
+       return !number.match(/[^z0-9\+\-\*\/\(\)\.]+/);
     }
     function pasteTextarea() {
       input.value = "";
