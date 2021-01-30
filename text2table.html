@@ -16,16 +16,16 @@
   <meta name="description" content="貼り付けられたテキストをHTMLのテーブルに変換します。" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <style type="text/css">
-    body{ 
-      background-color:#eeeeee;
-      color:#333333;
-      margin-right:auto;
-      margin-left:auto;
+    body { 
+      background-color: #eeeeee;
+      color: #333333;
+      margin-right: auto;
+      margin-left: auto;
       font-family: 'Nunito', 'Kosugi Maru', sans-serif;
     }
-    #title_link, #footer_link {
-      color:#333333;
-      text-decoration:none;
+    .nounderbar {
+      color: #333333;
+      text-decoration: none;
     }
     table{
       border-collapse: collapse;
@@ -35,25 +35,25 @@
       border: dashed 1px;
     }
     textarea{
-      width:100%;
+      width: 100%;
       max-width: 100%;
       height: calc( 1.3em * 5 );
       line-height: 1.3;      
     }
     @media screen and (min-width: 481px) {
       body{ 
-        width:800px;
+        width: 800px;
       }
     }
     @media screen and (max-width: 480px) {
       body{ 
-        width:90%;
+        width: 90%;
       }
     }
   </style>
 </head>
 <body>
-  <h1><a href="https://henkan.site/" id="title_link">変換サイト</a>&nbsp;-&nbsp;テキストをHTMLの表に変換</h1>
+  <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;テキストをHTMLの表に変換</h1>
   <hr>
   <p>貼り付けられたテキスト（タブ区切り）をHTMLの表に変換します。</p>
   <p>
@@ -72,7 +72,7 @@
   <span id="preview"></span>
   </p>
   <hr>
-  ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" id="footer_link">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" id="footer_link">プライバシー</a>
+  ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
   <script>
     const input = document.getElementById('input');
     const output = document.getElementById('output');
