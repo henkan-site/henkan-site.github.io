@@ -79,10 +79,12 @@
           output.value += "使用できない文字が含まれています。\n";
           continue;
         }
-        var answer = calculator(line);
-        if (!answer) {
-          answer = "syntax error";
-        }          
+        var answer;
+        try {
+          answer = calculator(line);
+        } catch (e) {
+          answer = e.message;
+        }
         output.value += answer + "\n";
       }
     });
