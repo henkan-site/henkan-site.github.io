@@ -118,9 +118,7 @@
       }
     });
     function numCheck(number) {
-       if (number.match(/[^z0-9]+/)) {
-         return false;
-       }
+       return !number.match(/[^z0-9]+/);
     }
     function checksum(number) {
       var a, s, i, x;
