@@ -85,25 +85,25 @@
         var line = lines[i];
         line = line.replace("-", "");
         switch (true) {
-        case /4\\\\d{12}(?:\\\\d{3})?/.test(line):
+        case /4\\d{12}(?:\\d{3})?/.test(line):
           output.value += "visa\n";
           break;
-        case /3(?:0[0-5]|[68]\\\\d)\\\\d{11}/.test(line):
+        case /3(?:0[0-5]|[68]\\d)\\d{11}/.test(line):
           output.value += "dinersClub\n";
           break;
-        case /(?:5[1-5]\\\\d{2}|2720|27[01][0-9]|2[3-6][0-9]{2}|22[3-9][0-9]|222[1-9])\\\\d{12}/.test(line):
+        case /(?:5[1-5]\\d{2}|2720|27[01][0-9]|2[3-6][0-9]{2}|22[3-9][0-9]|222[1-9])\\d{12}/.test(line):
           output.value += "masterCard\n";
           break;
-        case /6(?:011|5\\\\d{2})\\\\d{12}/.test(line):
+        case /6(?:011|5\\d{2})\\d{12}/.test(line):
           output.value += "discover\n";
           break;
-        case /3[47]\\\\d{13}/.test(line):
+        case /3[47]\\d{13}/.test(line):
           output.value += "americanExpress\n";
           break;
-         case /(?:2131|1800|35\\\\d{3})\\\\d{11}/.test(line):
+        case /(?:2131|1800|35\\d{3})\\d{11}/.test(line):
           output.value += "jcb\n";
           break;
-       default:
+        default:
           output.value += "不明\n";
           break;
         }
