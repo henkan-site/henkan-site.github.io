@@ -78,8 +78,12 @@
         if (!inputCheck(line)) {
           output.value += "使用できない文字が含まれています。\n";
           continue;
-        }        
-        output.value += calculator(line) + "\n";
+        }
+        var answer = calculator(line);
+        if (!answer) {
+          answer = "syntax error";
+        }          
+        output.value += answer + "\n";
       }
     });
     function calculator(obj){
