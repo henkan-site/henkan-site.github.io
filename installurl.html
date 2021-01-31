@@ -44,6 +44,7 @@
       }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@latest/build/qrcode.min.js"></script>
 </head>
 <body>
   <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;iOSアプリインストールURL取得</h1>
@@ -59,25 +60,45 @@
   【出力】
   <textarea readonly id="output"></textarea>
   <button onclick="copyTextarea()">Copy</button>
+  【QRコード】<br>
+  <canvas id="qr" width="0" height="0"></canvas><br>
+  <button id="save" onclick="Save()" style="display:none">保存</button>
   </p>
   <hr>
   ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
   <script>
     const input = document.getElementById('input');
     const output = document.getElementById('output');
+    const qr = document.getElementById('qr');
+    const save = document.getElementById('save');    
     input.addEventListener('input', function (e) {
       var text = e.target.value;
       output.value = "";
-      var lines = text.split('\n');
-      for(var i = 0; i < lines.length; i++) {
-        var line = lines[i];
-        if (!line) {
-          output.value += "\n";
-          continue;
-        }
-        output.value += "itms-services://?action=download-manifest&amp;url=" + encodeURI(line) + "\n";
+      text = text.replace(/\s+/g,"");
+      if (!text) {
+          clearQr();
+          return;
       }
+      text = "itms-services://?action=download-manifest&amp;url=" + encodeURI(text);
+      output.value = text;
+      writeQr(qr, text);
     });
+    function writeQr(canvas, data){
+      save.style.display = "";
+      return new Promise((res, rej)=>{
+          QRCode.toCanvas(canvas, data, {
+              margin: 2,
+              scale: 8
+          }, (err, tg) => !err ? res(tg) : rej(err));
+      });
+    }
+    function clearQr(){
+      qr.width = 0;
+      qr.height = 0;
+      qr.style.width = "0px";
+      qr.style.height = "0px";
+      save.style.display = "none";
+    }    
     function pasteTextarea() {
       input.value = "";
       input.focus();
@@ -92,6 +113,7 @@
     function clearTextarea() {
       input.value = "";
       output.value = "";
+      clearQr();
       input.focus();
     }
     var date = new Date();
