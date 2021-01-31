@@ -63,40 +63,53 @@
   <hr>
   ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
   <script>
+	var pref = ["北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県","茨城県","栃木県","群馬県","埼玉県","千葉県","東京都","神奈川県","新潟県","富山県","石川県","福井県","山梨県","長野県","岐阜県","静岡県","愛知県","三重県","滋賀県","京都府","大阪府","兵庫県","奈良県","和歌山県","鳥取県","島根県","岡山県","広島県","山口県","徳島県","香川県","愛媛県","高知県","福岡県","佐賀県","長崎県","熊本県","大分県","宮崎県","鹿児島県","沖縄県"];
     const input = document.getElementById('input');
     const output = document.getElementById('output');
     input.addEventListener('input', function (e) {
       var text = e.target.value;
       output.value = "";
-      var lines = text.split('\n');
-      for(var i = 0; i < lines.length; i++) {
-        var line = lines[i];
-        if (!line) {
-          output.value += "\n";
-          continue;
-        }
-        if (!inputCheck(line)) {
+      text = text.replace(/\s+/g,"");
+	　if (!text) {
+        if (!inputCheck(text)) {
           output.value += "使用できない文字が含まれています。\n";
-          continue;
+          return;
         }
-        line = line.replace("-","");
-        if (line.length != 7) {
+        text = text.replace("-","");
+        if (text.length != 7) {
           output.value += "半角7桁の数値を入力してください。\n";
-          continue;
+          return;
         }
-        var url = "https://henkan.site/data/zip/" + line.slice(0,3) + ".json";
+        var url = "https://henkan.site/data/zip/" + text.substr(0,3) + ".json";
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
         xhr.send();
         xhr.onreadystatechange = function() {
           if(xhr.readyState === 4 && xhr.status === 200) {
-            var json = xhr.response.json();
-            var address = json.get(line.slice(3,4));
-            console.log(JSON.stringify(address));
-            output.value = xhr.responseText; //JSON.parse(xhr.responseText);
+            var responseJson = JSON.parse(xhr.response);
+            console.log(JSON.stringify(responseJson));
+			var n = String(Number(text.substr(3,4)));
+            var addresslist = responseJson[n];
+			var address = "";
+			if (addresslist != null) {
+              if (Array.isArray(addresslist[0])) {
+                addresslist.forEach((element) => {
+                  element[0] = pref[element[0]];
+                  address += element.join("");
+                  address += "\n";
+                })
+              } else {
+                addresslist[0] = pref[addresslist[0]];
+                address = addresslist.join("");
+              }
+			}
+			else
+			{
+              address = "住所が見つかりませんでした。";
+			}
+            output.value = address;
           }
         }
-        break;
       }
     });
     function inputCheck(number) {
