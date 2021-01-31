@@ -73,44 +73,45 @@
       output.value = "";
       text = text.replace(/\s+/g,"");
       if (!text) {
-        if (!inputCheck(text)) {
-          output.value += "使用できない文字が含まれています。\n";
           return;
-        }
-        text = text.replace("-","");
-        if (text.length != 7) {
-          output.value += "半角7桁の数値を入力してください。\n";
-          return;
-        }
-        var url = "https://henkan.site/data/zip/" + text.substr(0,3) + ".json";
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.send();
-        xhr.onreadystatechange = function() {
-          if(xhr.readyState === 4 && xhr.status === 200) {
-            var responseJson = JSON.parse(xhr.response);
-            console.log(JSON.stringify(responseJson));
-            var n = String(Number(text.substr(3,4)));
-            var addresslist = responseJson[n];
-            var address = "";
-            if (addresslist != null) {
-              if (Array.isArray(addresslist[0])) {
-                addresslist.forEach((element) => {
-                  element[0] = pref[element[0]];
-                  address += element.join("");
-                  address += "\n";
-                })
-              } else {
-                addresslist[0] = pref[addresslist[0]];
-                address = addresslist.join("");
-              }
+      }
+      if (!inputCheck(text)) {
+        output.value += "使用できない文字が含まれています。\n";
+        return;
+      }
+      text = text.replace("-","");
+      if (text.length != 7) {
+        output.value += "半角7桁の数値を入力してください。\n";
+        return;
+      }
+      var url = "https://henkan.site/data/zip/" + text.substr(0,3) + ".json";
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url);
+      xhr.send();
+      xhr.onreadystatechange = function() {
+        if(xhr.readyState === 4 && xhr.status === 200) {
+          var responseJson = JSON.parse(xhr.response);
+          console.log(JSON.stringify(responseJson));
+          var n = String(Number(text.substr(3,4)));
+          var addresslist = responseJson[n];
+          var address = "";
+          if (addresslist != null) {
+            if (Array.isArray(addresslist[0])) {
+              addresslist.forEach((element) => {
+                element[0] = pref[element[0]];
+                address += element.join("");
+                address += "\n";
+              })
+            } else {
+              addresslist[0] = pref[addresslist[0]];
+              address = addresslist.join("");
             }
-            else
-            {
-              address = "住所が見つかりませんでした。";
-            }
-            output.value = address;
           }
+          else
+          {
+            address = "住所が見つかりませんでした。";
+          }
+          output.value = address;
         }
       }
     });
