@@ -90,6 +90,9 @@
         xhr.send();
         xhr.onreadystatechange = function() {
           if(xhr.readyState === 4 && xhr.status === 200) {
+            var json = xhr.response.json();
+            var address = json.get(line.slice(3,4));
+            console.log(JSON.stringify(address));
             output.value = xhr.responseText; //JSON.parse(xhr.responseText);
           }
         }
