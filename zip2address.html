@@ -1,21 +1,21 @@
 ﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGMRV1QCCF"></script>
-  <script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGMRV1QCCF"></script>
+    <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-LGMRV1QCCF');
-  </script>
-  <title>郵便番号を住所に変換 - 変換サイト</title>
-  <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Nunito&display=swap" rel="stylesheet">  
-  <meta name="description" content="入力された郵便番号から住所を取得する。" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <style type="text/css">
+    </script>
+    <title>郵便番号を住所に変換 - 変換サイト</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Nunito&display=swap" rel="stylesheet">
+    <meta name="description" content="入力された郵便番号から住所を取得する。"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <style type="text/css">
     body { 
       background-color: #eeeeee;
       color: #333333;
@@ -43,26 +43,30 @@
         width: 90%;
       }
     }
-  </style>
+
+
+    </style>
 </head>
 <body>
-  <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;郵便番号を住所に変換</h1>
-  <hr>
-  <p>入力された郵便番号から住所を取得する。</p>
-  <p>
-  【入力】
-  <textarea id="input" placeholder="郵便番号を入力してください。"></textarea>
-  <button onclick="pasteTextarea()">Paste</button>
-  <button onclick="clearTextarea()">Clear</button>
-  </p>
-  <p>
-  【出力】
-  <textarea readonly id="output"></textarea>
-  <button onclick="copyTextarea()">Copy</button>
-  </p>
-  <hr>
-  ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
-  <script>
+<h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;郵便番号を住所に変換</h1>
+<hr>
+<p>入力された郵便番号から住所を取得する。</p>
+<p>
+    【入力】
+    <textarea id="input" placeholder="郵便番号を入力してください。"></textarea>
+    <button onclick="pasteTextarea()">Paste</button>
+    <button onclick="clearTextarea()">Clear</button>
+</p>
+<p>
+    【出力】
+    <textarea readonly id="output"></textarea>
+    <button onclick="copyTextarea()">Copy</button>
+</p>
+<hr>
+©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a
+        href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a
+        href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
+<script>
 	var pref = ["北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県","茨城県","栃木県","群馬県","埼玉県","千葉県","東京都","神奈川県","新潟県","富山県","石川県","福井県","山梨県","長野県","岐阜県","静岡県","愛知県","三重県","滋賀県","京都府","大阪府","兵庫県","奈良県","和歌山県","鳥取県","島根県","岡山県","広島県","山口県","徳島県","香川県","愛媛県","高知県","福岡県","佐賀県","長崎県","熊本県","大分県","宮崎県","鹿児島県","沖縄県"];
     const input = document.getElementById('input');
     const output = document.getElementById('output');
@@ -137,6 +141,6 @@
     window.onload = function() {
       input.focus();
     }    
-  </script>
+</script>
 </body>
 </html>
