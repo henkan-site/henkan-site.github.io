@@ -76,11 +76,10 @@
           continue;
         }        
         try {
-          output.value += decodeURI(encoded) + "\n";
+          output.value += decodeURI(line) + "\n";
         } catch (e) {
           output.value += e.message + "\n";
-        }        
-        output.value += encodeURI(line) + "\n";
+        }
       }
     });
     function pasteTextarea() {
