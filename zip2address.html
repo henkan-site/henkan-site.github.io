@@ -134,6 +134,17 @@
       output.value = "";
       input.focus();
     }
+    function Save() {
+      if (qr.msToBlob) { //for IE
+        var blob = qr.msToBlob();
+        window.navigator.msSaveBlob(blob, 'qrcode.png');
+      } else {
+        var a = document.createElement('a');
+        a.href = qr.toDataURL('image/png');
+        a.download = 'qrcode.png';
+        a.click();
+      }    
+    }
     var date = new Date();
     var yyyy = date.getFullYear();
     document.getElementById("year").innerHTML = yyyy;
