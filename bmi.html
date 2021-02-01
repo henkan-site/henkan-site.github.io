@@ -78,7 +78,7 @@
       output.innerText = weight.value / height.value / height.value;
     }
     function inputCheck(number) {
-       return !number.match(/[^z0-9\.]+/);
+       return number!=null&&!number.match(/[^z0-9\.]+/);
     }
     function clearTextarea() {
       height.value = "";
