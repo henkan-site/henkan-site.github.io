@@ -103,10 +103,9 @@
       if (index > 21) index = 21;     
       var dataset = myChart.data.datasets[0];
       for (var i = 0; i < dataset.data.length; i++) {
-        if (i == index)
+        if (i == index) {
           dataset.backgroundColor[i] = rgba(255, 0, 0, 0.5);
-        }
-        else{
+        } else {
          dataset.backgroundColor[i] = rgba(128, 128, 128, 0.5);
         }
       }
