@@ -52,12 +52,10 @@
   【入力】<br>
   <input type="text" id="height" placeholder="身長"></input><span>cm</span>&nbsp;
   <input type="text" id="weight" placeholder="体重"></input><span>kg</span>
-  <button onclick="clearTextarea()">Clear</button>
   </p>
   <p>
   【出力】<br>
   ＢＭＩ =  <span id="output"></span><br>
-  <button onclick="copyTextarea()">Copy</button>
   </p>
   <hr>
   ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
@@ -78,12 +76,6 @@
     }
     function inputCheck(number) {
        return (number!="") && (!number.match(/[^z0-9\.]+/));
-    }
-    function clearTextarea() {
-      height.value = "";
-      weight.value = "";
-      output.innerText = "";
-      height.focus();
     }
     var date = new Date();
     var yyyy = date.getFullYear();
