@@ -82,7 +82,10 @@
     }
     function drawgraph() {
       var ctx = document.getElementById("graph").getContext('2d');
-      var myChart = new Chart(ctx, {
+      if (window.myChart) {
+        window.myChart.destroy();
+      }
+      window.myChart = new Chart(ctx, {
           type: "bar",
           data: {
               labels:  ["15未満","15-16","16-17","17-18","18-19","19-20","20-21","21-22","22-23","23-24","24-25","25-26","26-27","27-28","28-29","29-30","30-31","31-32","32-33","33-34","34-35","35以上"],  // Ｘ軸のラベル
@@ -101,13 +104,13 @@
       var index = Math.floor(value) - 14;
       if (index < 0) index = 0;
       if (index > 21) index = 21;     
-      var dataset = myChart.data.datasets[0];
+      var dataset = window.myChart.data.datasets[0];
       for (var i = 0; i < dataset.data.length; i++) {
         if (i == index) {
           dataset.backgroundColor[i] = "rgba(255, 0, 0, 0.5)";
         }
       }
-      myChart.update();
+      window.myChart.update();
     }
     var date = new Date();
     var yyyy = date.getFullYear();
