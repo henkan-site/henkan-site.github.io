@@ -50,9 +50,9 @@
   <hr>
   <p>入力された身長と体重からBMI値を計算する。</p>
   <p>
-  【入力】
-  <input type="text" id="height" placeholder="身長"></input><span>cm</span>
-  <input type="text" id="weight" placeholder="体重"></input><span>cm</span>
+  【入力】<br>
+  <input type="text" id="height" placeholder="身長"></input><span>cm</span><br>
+  <input type="text" id="weight" placeholder="体重"></input><span>kg</span><br>
   <button onclick="clearTextarea()">Clear</button>
   </p>
   <p>
@@ -66,25 +66,31 @@
     const height = document.getElementById('height');
     const weight = document.getElementById('weight');
     const output = document.getElementById('output');
-    input.addEventListener('input', function (e) {
+    height.addEventListener('input', inputevent);
+    height.addEventListener('input', inputevent);
+    function inputevent(e) {
+      if (!inputCheck(height.value)) {
+        return;
+      }
+      if (!inputCheck(weight.value)) {
+        return;
+      }
       output.innerText = weight.value / height.value / height.value;
-    });
-    function calculator(obj){
-        return Function('"use strict";return (' + obj + ')')();
-    }    
+    }
     function inputCheck(number) {
-       return !number.match(/[^z0-9\+\-\*\/\(\)\.]+/);
+       return !number.match(/[^z0-9\.]+/);
     }
     function clearTextarea() {
-      input.value = "";
-      output.value = "";
-      input.focus();
+      height.value = "";
+      weight.value = "";
+      output.innerText = "";
+      height.focus();
     }
     var date = new Date();
     var yyyy = date.getFullYear();
     document.getElementById("year").innerHTML = yyyy;
     window.onload = function() {
-      input.focus();
+      height.focus();
     }    
   </script>
 </body>
