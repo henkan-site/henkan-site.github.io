@@ -55,69 +55,81 @@
   <input type="text" id="weight" placeholder="体重"></input><span>kg</span>
   </p>
   <p>
-  【出力】<br>
-  ＢＭＩ =  <span id="output"></span><br>
+  【出力】
+  <p id="result" style="display:none">あなたの BMI は <span id="output" style="font-weight: bold"></span> です。</p>
   <canvas id="graph" width="600" height="375" style="display: block; height: 250px; width: 400px;"></canvas>
+  <small>厚生労働省 平成２８年国民健康・栄養調査より</small>
   </p>
   <hr>
   ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
   <script>
     const height = document.getElementById('height');
     const weight = document.getElementById('weight');
+    const result = document.getElementById('result');
     const output = document.getElementById('output');
     height.addEventListener('input', inputevent);
     weight.addEventListener('input', inputevent);
     function inputevent(e) {
-      if (!inputCheck(height.value)) {
+      if (!inputCheck(height.value) || !inputCheck(weight.value)) {
+        result.style.display = "none";
         return;
       }
-      if (!inputCheck(weight.value)) {
-        return;
-      }
-      output.innerText = 10000 * weight.value / height.value / height.value;
+      result.style.display = "block";
+      output.innerText = (10000 * weight.value / height.value / height.value).toFixed(2);
       drawgraph();
     }
     function inputCheck(number) {
        return (number!="") && (!number.match(/[^z0-9\.]+/));
     }
+    var colorList = function (index) {
+      var list = [];
+      for(i=0;i<22;i++){
+        if (i == index){
+          list.push("rgba(255, 0, 0, 0.25)");
+        }else{
+          list.push("rgba(128, 128, 128, 0.25)");
+        }
+      }
+      return list;
+    }
     function drawgraph() {
+      var value = output.innerText;
+      var index = -1;
+      if(!isNaN(value)){
+        index = Math.floor(value) - 14;
+        if (index < 0) index = 0;
+        if (index > 21) index = 21;     
+      }
       var ctx = document.getElementById("graph").getContext('2d');
       if (window.myChart) {
         window.myChart.destroy();
       }
       window.myChart = new Chart(ctx, {
-          type: "bar",
-          data: {
-              labels:  ["15未満","15-16","16-17","17-18","18-19","19-20","20-21","21-22","22-23","23-24","24-25","25-26","26-27","27-28","28-29","29-30","30-31","31-32","32-33","33-34","34-35","35以上"],  // Ｘ軸のラベル
-              datasets: [
-                  {
-                      label: "人数",
-                      data: [6,19,68,167,323,452,547,626,656,593,477,390,274,185,154,100,63,59,34,21,11,33]
-                  }
-              ]
-          },
-          options: {
-              responsive: false
+        type: "bar",
+        data: {
+          labels:  ["15未満","15-16","16-17","17-18","18-19","19-20","20-21","21-22","22-23","23-24","24-25","25-26","26-27","27-28","28-29","29-30","30-31","31-32","32-33","33-34","34-35","35以上"],
+          datasets: [
+            {
+               data: [6,19,68,167,323,452,547,626,656,593,477,390,274,185,154,100,63,59,34,21,11,33],
+               backgroundColor: colorList(index)
+             }
+          ]
+        },
+        options: {
+          responsive: false,
+          legend: {
+            display: false
           }
-      });
-      var value = output.innerText;
-      var index = Math.floor(value) - 14;
-      if (index < 0) index = 0;
-      if (index > 21) index = 21;     
-      var dataset = window.myChart.data.datasets[0];
-      for (var i = 0; i < dataset.data.length; i++) {
-        if (i == index) {
-          dataset.backgroundColor[i] = "rgba(255, 0, 0, 0.5)";
         }
-      }
-      window.myChart.update();
+      });
     }
     var date = new Date();
     var yyyy = date.getFullYear();
     document.getElementById("year").innerHTML = yyyy;
     window.onload = function() {
       height.focus();
-    }    
+    }
+    drawgraph();
   </script>
 </body>
 </html>
