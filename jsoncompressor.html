@@ -9,11 +9,11 @@
     gtag('js', new Date());
     gtag('config', 'G-LGMRV1QCCF');
   </script>
-  <title>JSONを整形 - 変換サイト</title>
+  <title>JSONを圧縮 - 変換サイト</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Nunito&display=swap" rel="stylesheet">  
-  <meta name="description" content="入力されたJSONを整形する" />
+  <meta name="description" content="入力されたJSONを圧縮する" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <style type="text/css">
     body { 
@@ -46,9 +46,9 @@
   </style>
 </head>
 <body>
-  <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;JSONを整形</h1>
+  <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;JSONを圧縮</h1>
   <hr>
-  <p>入力されたJSONを整形する</p>
+  <p>入力されたJSONを圧縮する</p>
   <p>
   【入力】
   <textarea id="input" placeholder="文字列を入力してください。"></textarea>
@@ -70,7 +70,7 @@
       const text = e.target.value;
       if (text != "") {
         const obj = JSON.parse(text);
-        output.value = JSON.stringify(obj, null , "\t");
+        output.value = JSON.stringify(obj);
       }
     });
     function pasteTextarea() {
