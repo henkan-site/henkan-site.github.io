@@ -43,7 +43,8 @@
 <body>
   <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a></h1>
   <hr>
-  <ul>
+  <input type="text" id="search" placeholder="検索">
+  <ul id="target">
     <li><a href="https://henkan.site/text2table.html">text2table</a>&nbsp;テキストをHTMLの表に変換</li>
     <li><a href="https://henkan.site/text2qrcode.html">text2qrcode</a>&nbsp;テキストをQRコードに変換</li>
     <li><a href="https://henkan.site/creditcard.html">creditcard</a>&nbsp;クレジットカードの社名取得</li>
@@ -66,9 +67,26 @@
   <hr>
   ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
   <script>
+    const search = document.getElementById('search');
+    const target = document.getElementById('target');
+    search.addEventListener('input', function (e) {
+      var searchText = search.value;
+      var items = target.getElementsByTagName("li")
+      for (var i = 0; i < items.length; ++i) {
+        var targetText = items[i].innerText;
+        if (targetText.indexOf(searchText) != -1) {
+          items[i].hidden = false;
+        } else {
+          items[i].hidden = true;
+        }
+      }
+    });
     var date = new Date();
     var yyyy = date.getFullYear();
     document.getElementById("year").innerHTML = yyyy;
+    window.onload = function() {
+      search.focus();
+    }
   </script>
 </body>
 </html>
