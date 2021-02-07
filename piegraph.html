@@ -9,11 +9,11 @@
     gtag('js', new Date());
     gtag('config', 'G-LGMRV1QCCF');
   </script>
-  <title>棒グラフを作成 - 変換サイト</title>
+  <title>円グラフを作成 - 変換サイト</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Nunito&display=swap" rel="stylesheet">  
-  <meta name="description" content="入力された項目、数値から棒グラフを作成します。" />
+  <meta name="description" content="入力された項目、数値から円グラフを作成します。" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <style type="text/css">
     body { 
@@ -47,19 +47,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 </head>
 <body>
-  <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;棒グラフを作成</h1>
+  <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;円グラフを作成</h1>
   <hr>
-  <p>入力された項目、数値から棒グラフを作成します。</p>
+  <p>入力された項目、数値から円グラフを作成します。</p>
   <p>
   【入力】
-    <textarea id="input" placeholder="項目名と数値を入力してください。"></textarea>
+    <textarea id="input" placeholder="項目名と数値を入力してください。\n【入力例】\n1月,556\n2月,642\n3月,336\n4月,671"></textarea>
     <button onclick="pasteTextarea()">Paste</button>
     <button onclick="clearTextarea()">Clear</button>
   </p>
   <p>
     【出力】
-    <canvas id="graph" width="1280" height="720" style="width:100%;"></canvas>
-    <button onclick="download()">保存</button>
+    <canvas id="graph" width="1200" height="1200" style="width:100%;"></canvas>
+    <button onclick="download()">ダウンロード</button>
   </p>
   <hr>
   ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
@@ -70,7 +70,11 @@
     });
     function drawgraph() {
       var labels = [];
-      var data = [];
+      var dataValue = [];
+      var dataLabel = [];
+      var total = 0;
+      var backgroundColor = ["#E60012","#F39800","#FFF100","#8FC31F","#009944","#009E96","#00A0E9","#0068B7","#1D2088","#920783","#E4007F","#E5004F"];
+      var textColor = ["rgba(255,255,255,0.75)","rgba(255,255,255,0.75)","rgba(0,0,0,0.45)","rgba(0,0,0,0.45)","rgba(255,255,255,0.75)","rgba(255,255,255,0.75)","rgba(255,255,255,0.75)","rgba(255,255,255,0.75)","rgba(255,255,255,0.75)","rgba(255,255,255,0.75)","rgba(255,255,255,0.75)","rgba(255,255,255,0.75)"];
       var text = input.value;
       var lines = text.split('\n');
       for(var i = 0; i < lines.length; i++) {
@@ -80,20 +84,46 @@
         }
         const item = line.split(",");
         labels.push(item[0]);
-        data.push(item[1]);
+        dataValue.push(parseFloat(item[1]));
+        dataLabel.push(item[1]);
       }
+      total = dataValue.reduce(function(a, x){return a + x;});
       var ctx = document.getElementById("graph").getContext('2d');
       if (window.myChart) {
         window.myChart.destroy();
       }
+      var dataLabelPlugin = {
+        afterDatasetsDraw: function (chart, easing) {
+          var ctx = chart.ctx;
+          chart.data.datasets.forEach(function (dataset, i) {
+            var meta = chart.getDatasetMeta(i);
+            if (!meta.hidden) {
+              meta.data.forEach(function (element, index) {
+                ctx.fillStyle = textColor[index];
+                var fontSize = 22;
+                var fontStyle = 'normal';
+                var fontFamily = 'Kosugi Maru';
+                ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                var dataString = dataLabel[index]+'('+Math.ceil(100*dataValue[index]/total)+'%)';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                var padding = 5;
+                var position = element.tooltipPosition();
+                ctx.fillText(chart.data.labels[index], position.x, position.y - (fontSize / 2) - padding);
+                ctx.fillText(dataString, position.x, position.y + (fontSize / 2) - padding);
+              })
+            }
+          })
+        }
+      }
       window.myChart = new Chart(ctx, {
-        type: "bar",
+        type: "pie",
         data: {
           labels: labels,
           datasets: [
             {
-               data: data,
-               backgroundColor: "#015597"
+               data: dataValue,
+               backgroundColor: backgroundColor
             }
           ]
         },
@@ -102,7 +132,8 @@
           legend: {
             display: false
           }
-        }
+        },
+        plugins: [dataLabelPlugin]
       });
     }
     function pasteTextarea() {
