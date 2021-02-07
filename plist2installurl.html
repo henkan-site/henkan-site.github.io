@@ -58,8 +58,9 @@
   </p>
   <p>
   【出力】
-  <textarea readonly id="output"></textarea>
-  <button onclick="copyTextarea()">Copy</button>
+    <textarea readonly id="output"></textarea>
+    <button id="copy" style="display:none" onclick="copyTextarea()">Copy</button>
+    <a id="link" style="display:none" href="">リンク</a>
   </p>
   <p>
   【QRコード】<br>
@@ -72,7 +73,9 @@
     const input = document.getElementById('input');
     const output = document.getElementById('output');
     const qr = document.getElementById('qr');
-    const save = document.getElementById('save');    
+    const save = document.getElementById('save');
+    const link = document.getElementById('link');
+    const copy = document.getElementById('copy');
     input.addEventListener('input', function (e) {
       var text = e.target.value;
       output.value = "";
@@ -85,10 +88,13 @@
       output.value = text;
       writeQr(qr, text);
     });
-    function writeQr(canvas, data){
+    function writeQr(canvas, url){
+      copy.style.display = "";
+      link.href = url;
+      link.style.display = "";
       save.style.display = "";
       return new Promise((res, rej)=>{
-          QRCode.toCanvas(canvas, data, {
+          QRCode.toCanvas(canvas, url, {
               margin: 2,
               scale: 4
           }, (err, tg) => !err ? res(tg) : rej(err));
@@ -99,8 +105,10 @@
       qr.height = 0;
       qr.style.width = "0px";
       qr.style.height = "0px";
+      copy.style.display = "none";
+      link.style.display = "none";
       save.style.display = "none";
-    }    
+    }
     function pasteTextarea() {
       input.value = "";
       input.focus();
