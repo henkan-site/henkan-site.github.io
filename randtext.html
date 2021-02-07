@@ -85,8 +85,8 @@
       var lines = text.split('\n');
       var words = lines.map(function(d) {
         return {
-          text: d.split(',')[0],
-          size: d.split(',')[1]
+          text: d.split(/[,\t]/)[0],
+          size: d.split(/[,\t]/)[1]
           };
         });
 
