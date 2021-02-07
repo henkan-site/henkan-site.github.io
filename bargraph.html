@@ -78,7 +78,7 @@
         if (!line) {
           continue;
         }
-        const item = line.split(",");
+        const item = line.split(/[,\t]/);
         labels.push(item[0]);
         data.push(item[1]);
       }

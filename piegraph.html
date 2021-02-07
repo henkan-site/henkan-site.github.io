@@ -82,7 +82,7 @@
         if (!line) {
           continue;
         }
-        const item = line.split(",");
+        const item = line.split(/[,\t]/);
         labels.push(item[0]);
         dataValue.push(parseFloat(item[1]));
         dataLabel.push(item[1]);
