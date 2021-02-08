@@ -86,7 +86,7 @@
       var words = lines.map(function(d) {
         return {
           text: d.split(/[,\t]/)[0],
-          size: d.split(/[,\t]/)[1]
+          size: d.split(/[,\t]/)[1] ?? (Math.random()*100)
           };
         });
 
