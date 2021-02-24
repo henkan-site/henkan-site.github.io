@@ -59,7 +59,7 @@
   <p>
   【出力】<br>
   <canvas id="output" width="0" height="0"></canvas><br>
-  <button id="download" onclick="download()" style="display:none">保存</button>
+  <button id="download" onclick="downloadQR()" style="display:none">保存</button>
   </p>
   <hr>
   ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
@@ -101,7 +101,7 @@
       clearQr();
       input.focus();
     }
-    function download() {
+    function downloadQR() {
       if (output.msToBlob) { //for IE
         var blob = output.msToBlob();
         window.navigator.msSaveBlob(blob, 'qrcode.png');
