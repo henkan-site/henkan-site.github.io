@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGMRV1QCCF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LGMRV1QCCF');
+  </script>
+  <title>筆記体 - 変換サイト</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Nunito&family=Parisienne&display=swap" rel="stylesheet">
+  <meta name="description" content="入力された文字列(半角英数字)を筆記体に変換する。" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <style type="text/css">
+    body { 
+      background-color: #eeeeee;
+      color: #333333;
+      margin-right: auto;
+      margin-left: auto;
+      font-family: 'Nunito', 'Kosugi Maru', sans-serif;
+    }
+    .nounderbar {
+      color: #333333;
+      text-decoration: none;
+    }
+    textarea {
+      width: 100%;
+      max-width: 100%;
+      height: calc( 1.3em * 5 );
+      line-height: 1.3;      
+    }
+    #output {
+      font-size: 36px;
+      font-family: 'Parisienne', cursive;
+    }
+    @media screen and (min-width: 481px) {
+      body{ 
+        width: 800px;
+      }
+    }
+    @media screen and (max-width: 480px) {
+      body{ 
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;筆記体</h1>
+  <hr>
+  <p>入力された文字列(半角英数字)を筆記体に変換する。</p>
+  <p>
+  【入力】
+  <textarea id="input" placeholder="文字列(半角英数字)を入力してください。"></textarea>
+  <button onclick="pasteTextarea()">Paste</button>
+  <button onclick="clearTextarea()">Clear</button>
+  </p>
+  <p>
+  【出力】
+  <div><canvas id="output" width="100" height="100"></canvas></div>
+  <button onclick="download()">download</button>
+  </p>
+  <hr>
+  ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
+  <script>
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+    input.addEventListener('input', function (e) {
+      var text = e.target.value;
+      var ctx = output.getContext('2d');
+      ctx.clearRect(0, 0, output.width, output.height);
+      if (text != "") {
+        var metrics = ctx.measureText(text);
+        output.width = Math.max(metrics.width + 60, 100);
+        output.height = 100;
+        ctx.font = '64px Parisienne';
+        ctx.fillStyle = '#000000';
+        ctx.textBaseline = 'center';
+        ctx.textAlign = 'left';
+        var x = 30;
+        var y = 10 + output.height / 2;
+        ctx.fillText(text, x, y);
+      }
+    });
+    function pasteTextarea() {
+      input.value = "";
+      input.focus();
+      document.execCommand("paste");
+    }
+    function download() {
+      if (output.msToBlob) { //for IE
+        var blob = output.msToBlob();
+        window.navigator.msSaveBlob(blob, 'cursive.png');
+      } else {
+        var a = document.createElement('a');
+        a.href = output.toDataURL('image/png');
+        a.download = 'cursive.png';
+        a.click();
+      }
+    }
+    function clearTextarea() {
+      input.value = "";
+      output.value = "";
+      input.focus();
+    }
+    var date = new Date();
+    var yyyy = date.getFullYear();
+    document.getElementById("year").innerHTML = yyyy;
+    window.onload = function() {
+      input.focus();
+    }    
+  </script>
+</body>
+</html>
