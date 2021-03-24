@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGMRV1QCCF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LGMRV1QCCF');
+  </script>
+  <title>日付印を作成 - 変換サイト</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Nunito&display=swap" rel="stylesheet">  
+  <meta name="description" content="入力された名前、日付から日付印を作成します。" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <style type="text/css">
+    body { 
+      background-color: #eeeeee;
+      color: #333333;
+      margin-right: auto;
+      margin-left: auto;
+      font-family: 'Nunito', 'Kosugi Maru', sans-serif;
+    }
+    .nounderbar {
+      color: #333333;
+      text-decoration: none;
+    }
+    @media screen and (min-width: 481px) {
+      body{ 
+        width: 800px;
+      }
+    }
+    @media screen and (max-width: 480px) {
+      body{ 
+        width: 90%;
+      }
+    }
+  </style>
+  <script src="lib/pdfkit.js"></script>
+  <script src="lib/blob-stream.js"></script>
+  <script src="lib/canvas2pdf.js"></script>
+</head>
+<body>
+  <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;日付印を作成</h1>
+  <hr>
+  <p>入力された名前、日付から日付印を作成します。</p>
+  <p>
+  【入力】
+    <input type="text" id="name" placeholder="名前を入力してください。"></input>
+    <input type="text" id="date" placeholder="日付を入力してください。"></input>
+  </p>
+  <p>
+    【出力】
+    <div>
+      <canvas id="output" width="512" height="512" style="width:50%;"></canvas>
+    </div>
+    <div>
+      <button onclick="download()">ダウンロード</button>
+    </div>
+  </p>
+  <hr>
+  ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
+  <script>
+    const name = document.getElementById('name');
+    const date = document.getElementById('date');
+    const canvas =  document.getElementById('output');
+    name.addEventListener('input', function (e) {
+      drawsign();
+    });
+    date.addEventListener('input', function (e) {
+      drawsign();
+    });
+    function drawsign() {
+      var textname = name.value;
+      var namelist = textname.split(/,|\s/);
+      var topname = "",bottomname = "",subname = "";
+      if (namelist.length > 1) {
+        topname = namelist[0];
+        var i = namelist[1].match(/[\(\（].[\)\）]/)
+        if (i != null && i.length > 0) {
+          bottomname = namelist[1].replace(/[\(\（].[\)\）]/, "");
+          subname = i[0];
+        } else {
+          bottomname = namelist[1];
+        }
+      } else {
+        var i = namelist[0].match(/[\(\（].[\)\）]/)
+        if (i != null && i.length > 0) {
+          var str = namelist[0].replace(/[\(\（].[\)\）]/, "");
+          if (str.length % 2 == 0) {
+            topname = str.substr(0, str.length/2);
+            bottomname = str.substr(str.length/2, str.length/2);
+          }
+          else
+          {
+            bottomname = str;
+          }
+          subname = i[0];
+        } else {
+          var str = namelist[0];
+          if (str.length % 2 == 0) {
+            topname = str.substr(0, str.length/2);
+            bottomname = str.substr(str.length/2, str.length/2);
+          }
+          else
+          {
+            bottomname = str;
+          }
+        }
+      }
+      var textdate = date.value;
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.beginPath();
+      ctx.arc(canvas.width/2, canvas.height/2, 200, 0, Math.PI*2 ,true);
+      ctx.fillStyle = 'rgba(255,255,255,0)';
+      ctx.fill() ;
+
+      ctx.clip();
+
+      ctx.strokeStyle = 'rgb(255,00,0)';
+      ctx.lineWidth = 16;
+      ctx.stroke();
+
+      ctx.moveTo(0,256 - 70);
+      ctx.lineTo(canvas.width, 256 - 70);
+
+      ctx.moveTo(0,256 + 70);
+      ctx.lineTo(canvas.width, 256 + 70);
+
+      ctx.lineWidth = 8;
+      ctx.stroke();
+
+      fontSize = 80;
+      ctx.fillStyle = 'rgba(255, 0, 0)';
+      ctx.textBaseline = "middle";
+      ctx.font = 'normal ' + fontSize + 'px ' + 'sans-serif';
+      ctx.fillText(
+        textdate,
+        (canvas.width-Math.min(380,ctx.measureText(textdate).width)) / 2,
+        canvas.height/2,380
+      );
+
+      fontSize = 100;
+      ctx.fillStyle = 'rgba(255, 0, 0)';
+      ctx.textBaseline = "bottom";
+      ctx.font = 'normal ' + fontSize + 'px ' + 'sans-serif';
+      ctx.fillText(
+        topname,
+        (canvas.width-Math.min(256,ctx.measureText(topname).width))/2,
+        canvas.height/3,256
+      );
+
+      fontSize = 100;
+      ctx.fillStyle = 'rgba(255, 0, 0)';
+      ctx.textBaseline = "top";
+      ctx.font = 'normal ' + fontSize + 'px ' + 'sans-serif';
+      ctx.fillText(
+        bottomname,
+        (canvas.width-Math.min(200,ctx.measureText(bottomname).width))/2,
+        canvas.height/3 * 2,200
+      );
+
+      fontSize = 50;
+      ctx.fillStyle = 'rgba(255, 0, 0)';
+      ctx.textBaseline = "bottom";
+      ctx.font = 'normal ' + fontSize + 'px ' + 'sans-serif';
+      ctx.fillText(
+        subname,
+        canvas.width/2 + Math.min(200,ctx.measureText(bottomname).width),
+        canvas.height/6 * 5 - 16,64
+      );
+    }
+    function download() {
+      if (canvas.msToBlob) { //for IE
+        var blob = canvas.msToBlob();
+        window.navigator.msSaveBlob(blob, 'datesign.png');
+      } else {
+        var a = document.createElement('a');
+        a.href = canvas.toDataURL('image/png');
+        a.download = 'datesign.png';
+        a.click();
+      }
+    }
+    var date2 = new Date();
+    var yyyy = date2.getFullYear();
+    document.getElementById("year").innerHTML = yyyy;
+    window.onload = function() {
+      name.value = "山本(健)";
+      date.value = new Intl.DateTimeFormat('ja-JP-u-ca-japanese', {era: 'long'}).format(new Date());
+      drawsign();
+      name.focus();
+    }
+  </script>
+</body>
+</html>
