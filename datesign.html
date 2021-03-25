@@ -12,9 +12,24 @@
   <title>日付印を作成 - 変換サイト</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Nunito&display=swap" rel="stylesheet">  
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Nunito&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://rawgit.com/jquery/jquery-ui/master/ui/i18n/datepicker-ja.js"></script>
   <meta name="description" content="入力された名前、日付から日付印を作成します。" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <script>
+  $(function(){
+    $("#date").datepicker({
+      onSelect: function onSelect(fd, date) {
+        this.value = new Intl.DateTimeFormat('ja-JP-u-ca-japanese', {era: 'long'}).format(new Date(fd));
+        drawsign();
+      }
+    });
+  });
+  </script>
   <style type="text/css">
     body { 
       background-color: #eeeeee;
@@ -45,8 +60,12 @@
   <p>入力された名前、日付から日付印を作成します。</p>
   <p>
   【入力】
-    <input type="text" id="name" placeholder="名前を入力してください。"></input>
-    <input type="text" id="date" placeholder="日付を入力してください。"></input>
+    <div style="text-indent: 2em;">
+      <span>名前：<input type="text" id="name" placeholder="名前を入力してください。" /></span>
+    </div>
+    <div style="text-indent: 2em;">
+      <span>日付：<input type="text" id="date" placeholder="日付を入力してください。" /></span>
+    </div>
   </p>
   <p>
     【出力】
@@ -71,6 +90,7 @@
     });
     function drawsign() {
       var textname = name.value;
+      textname = textname.replace(/（/g, '(').replace(/）/g, ')');
       var namelist = textname.split(/,|\s/);
       var topname = "",bottomname = "",subname = "";
       if (namelist.length > 1) {
