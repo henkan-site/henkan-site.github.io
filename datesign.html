@@ -195,20 +195,15 @@
       );
     }
     function downloadpng() {
-      if (canvas.msToBlob) { //for IE
-        var blob = canvas.msToBlob();
-        window.navigator.msSaveBlob(blob, 'datesign.png');
-      } else {
-        var a = document.createElement('a');
-        a.href = canvas.toDataURL('image/png');
-        a.download = 'datesign.png';
-        a.click();
-      }
+      var a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = '日付印_' + name.value + '_' + date.value + '.png';
+      a.click();
     }
     function downloadpdf() {
       var pdf = new jsPDF();
       pdf.addImage(canvas.toDataURL("image/png"), 'PNG', 0, 0);
-      pdf.save('datesign.pdf');
+      pdf.save('日付印_' + name.value + '_' + date.value + '.pdf');
     }
     function isIe() {
       var ua = navigator.userAgent;
