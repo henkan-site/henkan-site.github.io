@@ -143,10 +143,10 @@
       ctx.clip();
 
       ctx.beginPath();
-      ctx.moveTo(0,256 - 70);
-      ctx.lineTo(canvas.width, 256 - 70);
-      ctx.moveTo(0,256 + 70);
-      ctx.lineTo(canvas.width, 256 + 70);
+      ctx.moveTo(0,256 - 64);
+      ctx.lineTo(canvas.width, 256 - 64);
+      ctx.moveTo(0,256 + 64);
+      ctx.lineTo(canvas.width, 256 + 64);
       ctx.lineWidth = 8;
       ctx.stroke();
 
@@ -225,7 +225,7 @@
         name.value = "山本(健)";
         date.value = new Intl.DateTimeFormat('ja-JP-u-ca-japanese', {era: 'long'}).format(new Date());
         drawsign();
-        name.focus();
+        name.select();
       }
     }
   </script>
