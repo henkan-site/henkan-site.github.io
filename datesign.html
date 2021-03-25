@@ -73,8 +73,9 @@
     【出力】
     <div style="text-align: center;">
       <canvas id="output" width="512" height="512" style="width:50%;"></canvas>
-    <br><a href="javascript:void(0);" onclick="downloadpng();">PNGダウンロード</a>
-    <br><a href="javascript:void(0);" onclick="downloadpdf();">PDFダウンロード</a>
+      <br><a href="javascript:void(0);" onclick="copy();">クリップボードにコピー</a>
+      <br><a href="javascript:void(0);" onclick="downloadpng();">PNGダウンロード</a>
+      <br><a href="javascript:void(0);" onclick="downloadpdf();">PDFダウンロード</a>
     </div>
   </p>
   <hr>
@@ -193,6 +194,30 @@
         canvas.width/2 + Math.min(200,ctx.measureText(bottomname).width),
         canvas.height/6 * 5 - 16,64
       );
+    }
+    function SelectText(element) {
+      if (document.body.createTextRange) {
+        var range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+      } else if (window.getSelection) {
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    }
+    function copy() {
+      var img = document.createElement('img');
+      img.src = canvas.toDataURL();
+      var div = document.createElement('div');
+      div.contentEditable = true;
+      div.appendChild(img);
+      document.body.appendChild(div);
+      SelectText(div);
+      document.execCommand('Copy');
+      document.body.removeChild(div);
     }
     function downloadpng() {
       var a = document.createElement('a');
