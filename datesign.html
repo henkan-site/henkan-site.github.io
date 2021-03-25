@@ -96,17 +96,17 @@
       var topname = "",bottomname = "",subname = "";
       if (namelist.length > 1) {
         topname = namelist[0];
-        var i = namelist[1].match(/[\(].[\)]/)
+        var i = namelist[1].match(/\(.\)/)
         if (i != null && i.length > 0) {
-          bottomname = namelist[1].replace(/[\(].[\)]/, "");
+          bottomname = namelist[1].replace(/\(.\)/, "");
           subname = i[0];
         } else {
           bottomname = namelist[1];
         }
       } else {
-        var i = namelist[0].match(/[\(].[\)]/)
+        var i = namelist[0].match(/\(.\)/)
         if (i != null && i.length > 0) {
-          var str = namelist[0].replace(/[\(].[\)]/, "");
+          var str = namelist[0].replace(/\(.\)/, "");
           if (str.length % 2 == 0) {
             topname = str.substr(0, str.length/2);
             bottomname = str.substr(str.length/2, str.length/2);
