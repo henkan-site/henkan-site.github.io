@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGMRV1QCCF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LGMRV1QCCF');
+  </script>
+  <title>素数表生成 - 変換サイト</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Nunito&display=swap" rel="stylesheet">  
+  <meta name="description" content="素数表生成を生成します" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <style type="text/css">
+    body { 
+      background-color: #eeeeee;
+      color: #333333;
+      margin-right: auto;
+      margin-left: auto;
+      font-family: 'Nunito', 'Kosugi Maru', sans-serif;
+    }
+    .nounderbar {
+      color: #333333;
+      text-decoration: none;
+    }
+    textarea {
+      width: 100%;
+      max-width: 100%;
+      height: calc( 1.3em * 5 );
+      line-height: 1.3;
+    }
+    @media screen and (min-width: 481px) {
+      body{ 
+        width: 800px;
+      }
+    }
+    @media screen and (max-width: 480px) {
+      body{ 
+        width: 90%;
+      }
+    }
+  </style>
+  <script src="./lib/d3.v3.min.js"></script>
+  <script src="./lib/d3.layout.cloud.js"></script>
+</head>
+<body>
+  <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;素数表生成</h1>
+  <hr>
+  <p>入力された数までの素数表生成を生成します。</p>
+  <p>
+  【入力】
+  <div>
+    <input type="text" value="1000" id="input">
+    <input type="button" value="生成" onclick="primenumber();"/>
+  </div>
+  </p>
+  <p>
+    【出力】
+    <div>
+      <textarea id="output" width="100%"></textarea>
+    </div>
+    <button onclick="copyTextarea()">Copy</button>
+</p>
+  <hr>
+  ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
+  <script>
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+    function primenumber() {
+      var max = input.value;
+      var primes = [];
+      primes.push(2);
+      var start_num = primes[primes.length - 1] + 1;
+      var end_num = Number(input.value);
+      if(start_num % 2 === 0)
+      {
+          start_num++;
+      }
+      var is_prime = true;
+      var x = 0;
+      for(i = start_num; i <= end_num; i+=2)
+      {
+          is_prime = true;
+          num_primes = primes.length;
+          for(x=0;x<num_primes;x++)
+          {
+              if(i % primes[x] === 0)
+              {
+                  is_prime = false;
+                  break;
+              }
+          }
+          if(is_prime === true)
+          {
+              primes.push(i);
+          }
+      }
+      output.value = primes.join(", ");
+      output.select();
+    }
+    function copyTextarea() {
+      var copyText = document.getElementById("output");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+    }
+    var date = new Date();
+    var yyyy = date.getFullYear();
+    document.getElementById("year").innerHTML = yyyy;
+    window.onload = function() {
+      primenumber();
+    }
+  </script>
+</body>
+</html>
