@@ -109,8 +109,8 @@
         if (i != null && i.length > 0) {
           var str = namelist[0].replace(/\(.\)/, "");
           if (str.length % 2 == 0) {
-            topname = str.substr(0, str.length/2);
-            bottomname = str.substr(str.length/2, str.length/2);
+            topname = str.substr(0, str.length / 2);
+            bottomname = str.substr(str.length / 2, str.length / 2);
           }
           else
           {
@@ -120,8 +120,8 @@
         } else {
           var str = namelist[0];
           if (str.length % 2 == 0) {
-            topname = str.substr(0, str.length/2);
-            bottomname = str.substr(str.length/2, str.length/2);
+            topname = str.substr(0, str.length / 2);
+            bottomname = str.substr(str.length / 2, str.length / 2);
           }
           else
           {
@@ -136,7 +136,7 @@
       //ctx.filter = 'blur(2px)';
 
       ctx.beginPath();
-      ctx.arc(canvas.width/2, canvas.height/2, 200, 0, Math.PI*2 ,true);
+      ctx.arc(canvas.width / 2, canvas.height / 2, 200, 0, Math.PI*2 ,true);
       ctx.strokeStyle = 'rgb(255,00,0)';
       ctx.lineWidth = 8;
       ctx.stroke();
@@ -158,8 +158,8 @@
       ctx.font = 'normal ' + fontSize + 'px ' + 'sans-serif';
       ctx.fillText(
         textdate,
-        (canvas.width-Math.min(380,ctx.measureText(textdate).width)) / 2,
-        canvas.height/2,380
+        (canvas.width-Math.min(380, ctx.measureText(textdate).width)) / 2,
+        canvas.height / 2,380
       );
 
       ctx.beginPath();
@@ -169,8 +169,8 @@
       ctx.font = 'normal ' + fontSize + 'px ' + 'sans-serif';
       ctx.fillText(
         topname,
-        (canvas.width-Math.min(256,ctx.measureText(topname).width))/2,
-        canvas.height/3,256
+        (canvas.width - Math.min(200, ctx.measureText(topname).width)) / 2,
+        canvas.height / 3 + 8,200
       );
 
       ctx.beginPath();
@@ -180,8 +180,8 @@
       ctx.font = 'normal ' + fontSize + 'px ' + 'sans-serif';
       ctx.fillText(
         bottomname,
-        (canvas.width-Math.min(200,ctx.measureText(bottomname).width))/2,
-        canvas.height/3 * 2,200
+        (canvas.width - Math.min(200, ctx.measureText(bottomname).width)) / 2,
+        canvas.height / 3 * 2 - 8,200
       );
 
       ctx.beginPath();
@@ -191,8 +191,8 @@
       ctx.font = 'normal ' + fontSize + 'px ' + 'sans-serif';
       ctx.fillText(
         subname,
-        canvas.width/2 + Math.min(200,ctx.measureText(bottomname).width),
-        canvas.height/6 * 5 - 16,64
+        canvas.width / 2 + Math.min(200, ctx.measureText(bottomname).width),
+        canvas.height / 6 * 5 - 16, 64
       );
     }
     function SelectText(element) {
