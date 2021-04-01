@@ -227,7 +227,7 @@
     }
     function downloadpdf() {
       var pdf = new jsPDF();
-      pdf.addImage(canvas.toDataURL("image/png"), 'PNG', 0, 0, 128, 128);
+      pdf.addImage(canvas.toDataURL("image/png"), 'PNG', 0, 0, 12, 12);
       pdf.save('日付印_' + name.value + '_' + date.value + '.pdf');
     }
     function isIe() {
