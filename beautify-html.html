@@ -67,7 +67,12 @@
     const input = document.getElementById('input');
     const output = document.getElementById('output');
     input.addEventListener('input', function (e) {
-       output.text = style_html(input.text);
+       output.text = html_beautify(input.text, {
+            indent_size: 4,
+            indent_char: '\t',
+            max_char: 0,
+            unformatted: []
+        });
     });
     function pasteTextarea() {
       input.value = "";
