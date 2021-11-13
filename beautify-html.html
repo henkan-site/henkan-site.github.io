@@ -68,8 +68,8 @@
     const output = document.getElementById('output');
     input.addEventListener('input', function (e) {
        output.value = html_beautify(e.target.value, {
-            indent_size: 4,
-            indent_char: '\t',
+            indent_size: 2,
+            indent_char: ' ',
             max_char: 0,
             unformatted: []
         });
