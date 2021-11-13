@@ -67,7 +67,7 @@
     const input = document.getElementById('input');
     const output = document.getElementById('output');
     input.addEventListener('input', function (e) {
-       output.text = html_beautify(input.text, {
+       output.value = html_beautify(e.target.value, {
             indent_size: 4,
             indent_char: '\t',
             max_char: 0,
