@@ -96,17 +96,17 @@
             newtxt = difflib.stringAsLines(input2.value),
             sm = new difflib.SequenceMatcher(base, newtxt),
             opcodes = sm.get_opcodes(),
-            contextSize = contextSize.value;
+            contextSizeValue = contextSize.value;
 
         output.innerHTML = "";
-        contextSize = contextSize || null;
+        contextSizeValue = contextSizeValue || null;
         output.appendChild(diffview.buildView({
             baseTextLines: base,
             newTextLines: newtxt,
             opcodes: opcodes,
             baseTextName: "Base Text",
             newTextName: "New Text",
-            contextSize: contextSize,
+            contextSize: contextSizeValue,
             viewType: viewType
         }));
     }
@@ -127,7 +127,6 @@
     var yyyy = date.getFullYear();
     document.getElementById("year").innerHTML = yyyy;
     window.onload = function() {
-      input1 = document.getElementById('input1');
       input1.focus();
     }
   </script>
