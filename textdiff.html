@@ -44,6 +44,7 @@
       }
     }
   </style>
+  <link rel="stylesheet" type="text/css" href="./lib/diffview.css"/>
   <script src="./lib/diffview.js"></script>
   <script src="./lib/difflib.js"></script>
 </head>
@@ -56,19 +57,24 @@
   <input type="hidden" type="text" id="contextSize" value="" />
   <table>
     <tr>
+      <th>
+        変更前
+      </th>
+      <th>
+        変更後
+      </th>
+    </tr>
+    <tr>
       <td>
         <textarea id="input1" placeholder="文字列を入力してください。"></textarea>
         <button onclick="pasteTextarea('input1')">Paste</button>
         <button onclick="clearTextarea('input1')">Clear</button>
       </td>
-    </tr>
-    <tr>
       <td>
         <textarea id="input2" placeholder="文字列を入力してください。"></textarea>
         <button onclick="pasteTextarea('input2')">Paste</button>
         <button onclick="clearTextarea('input2')">Clear</button>
       </td>
-    </tr>
     </tr>
   </table>
   </p>
