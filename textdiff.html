@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGMRV1QCCF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LGMRV1QCCF');
+  </script>
+  <title>2つの入力テキストを比較 - 変換サイト</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Nunito&display=swap" rel="stylesheet">  
+  <meta name="description" content="入力されたHTMLを圧縮する" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <style type="text/css">
+    body { 
+      background-color: #eeeeee;
+      color: #333333;
+      margin-right: auto;
+      margin-left: auto;
+      font-family: 'Nunito', 'Kosugi Maru', sans-serif;
+    }
+    .nounderbar {
+      color: #333333;
+      text-decoration: none;
+    }
+    textarea {
+      width: 100%;
+      max-width: 100%;
+      height: calc( 1.3em * 5 );
+      line-height: 1.3;      
+    }
+    @media screen and (min-width: 481px) {
+      body{ 
+        width: 800px;
+      }
+    }
+    @media screen and (max-width: 480px) {
+      body{ 
+        width: 90%;
+      }
+    }
+  </style>
+  <script type="text/javascript" src="diffview.js"></script>
+  <script type="text/javascript" src="difflib.js"></script>
+</head>
+<body>
+  <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;テキスト比較</h1>
+  <hr>
+  <p>入力された2つのテキスト比較する</p>
+  <p>
+  【入力】
+  <input type="hidden" type="text" id="contextSize" value="" />
+  <table>
+    <tr>
+      <td>
+        <textarea id="input1" placeholder="文字列を入力してください。"></textarea>
+        <button onclick="pasteTextarea('input1')">Paste</button>
+        <button onclick="clearTextarea('input1')">Clear</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <textarea id="input2" placeholder="文字列を入力してください。"></textarea>
+        <button onclick="pasteTextarea('input2')">Paste</button>
+        <button onclick="clearTextarea('input2')">Clear</button>
+      </td>
+    </tr>
+    </tr>
+  </table>
+  </p>
+  <p>
+  【出力】
+  <div id="output"></div>
+  <button onclick="copyTextarea()">Copy</button>
+  </p>
+  <hr>
+  ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
+  <script>
+    input.addEventListener('input1', function (e) {
+      diffUsingJS(0);
+    });
+    input.addEventListener('input2', function (e) {
+      diffUsingJS(0);
+    });
+    function diffUsingJS(viewType) {
+        "use strict";
+        var byId = function (id) { return document.getElementById(id); },
+            base = difflib.stringAsLines(byId("input1").value),
+            newtxt = difflib.stringAsLines(byId("input2").value),
+            sm = new difflib.SequenceMatcher(base, newtxt),
+            opcodes = sm.get_opcodes(),
+            diffoutputdiv = byId("output"),
+            contextSize = byId("contextSize").value;
+
+        diffoutputdiv.innerHTML = "";
+        contextSize = contextSize || null;
+        diffoutputdiv.appendChild(diffview.buildView({
+            baseTextLines: base,
+            newTextLines: newtxt,
+            opcodes: opcodes,
+            baseTextName: "Base Text",
+            newTextName: "New Text",
+            contextSize: contextSize,
+            viewType: viewType
+        }));
+    }
+    function pasteTextarea(id) {
+      e = document.getElementById(id);
+      e.value = "";
+      e.focus();
+      document.execCommand("paste");
+      diffUsingJS(0);
+    }
+    function clearTextarea(id) {
+      e = document.getElementById(id);
+      e.value = "";
+      e.focus();
+      diffUsingJS(0);
+    }
+    var date = new Date();
+    var yyyy = date.getFullYear();
+    document.getElementById("year").innerHTML = yyyy;
+    window.onload = function() {
+      input1 = document.getElementById('input1');
+      input1.focus();
+    }
+  </script>
+</body>
+</html>
