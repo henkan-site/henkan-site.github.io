@@ -99,7 +99,6 @@
             sm = new difflib.SequenceMatcher(base, newtxt),
             opcodes = sm.get_opcodes(),
             contextSizeValue = contextSize.value;
-
         output.innerHTML = "";
         contextSizeValue = contextSizeValue || null;
         output.appendChild(diffview.buildView({
