@@ -28,10 +28,9 @@
       text-decoration: none;
     }
     textarea {
-      width: 100%;
-      max-width: 100%;
-      height: calc( 1.3em * 5 );
-      line-height: 1.3;      
+      width: 95%;
+      height: calc( 1.3em * 15 );
+      line-height: 1.3em;
     }
     @media screen and (min-width: 481px) {
       body{ 
@@ -55,7 +54,7 @@
   <p>
   【入力】
   <input type="hidden" type="text" id="contextSize" value="" />
-  <table>
+  <table style="width:100%;">
     <tr>
       <th>Base Text</th>
       <th>New Text</th>
@@ -83,7 +82,6 @@
   <p>
   【出力】
   <div id="output"></div>
-  <button onclick="copyTextarea()">Copy</button>
   </p>
   <hr>
   ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
