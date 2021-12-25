@@ -51,14 +51,14 @@
   <p>入力された画像をグレイスケールにする</p>
   <p>
   【入力】
-    <img id="imageSrc" alt="No Image" />
+    <img id="imageSrc" alt="No Image" style="display:none" />
     <input type="file" id="fileInput" name="file" />
     <button onClick="grayscale()">グレイスケール変換</button>
   </p>
   <p>
   【出力】
-    <canvas id="canvasOutput" ></canvas>
-    <a id="download" href="#" download="canvas.png">ダウンロード</a>
+    <canvas id="canvasOutput" style="display:none"></canvas>
+    <a id="download" href="#" download="canvas.png" style="display:none">ダウンロード</a>
   </p>
   <hr>
   ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
@@ -69,6 +69,7 @@
     let downloadElement = document.getElementById('download');
     inputElement.addEventListener('change', (e) => {
       imgElement.src = URL.createObjectURL(e.target.files[0]);
+      imgElement.style.display = "";
     }, false);
     function grayscale(){
       let mat = cv.imread(imgElement);
@@ -77,6 +78,8 @@
       cv.imshow('canvasOutput', dst);
       mat.delete();
       dst.delete();
+      outputElement.style.display = "";
+      downloadElement.style.display = "";
     }
     downloadElement.addEventListener('click', (e) => {
       var base64 = outputElement.toDataURL("image/png");
