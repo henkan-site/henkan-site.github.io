@@ -53,18 +53,14 @@
   【入力】
   <div class="inputoutput">
     <img id="imageSrc" alt="No Image" />
-    <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
+    <input type="file" id="fileInput" name="file" />
   </div>
-  <form name="test">
-    <input type="button" value="grayscale" onClick="grayscale()">
-    <br>
-  </form>
   </p>
   <p>
   【出力】
   <div class="inputoutput">
     <canvas id="canvasOutput" ></canvas>
-    <div class="caption">canvasOutput</div>
+    <a id="download" href="#" download="canvas.png">ダウンロード</a>
   </div>
   </p>
   <hr>
@@ -72,8 +68,11 @@
   <script>
     let imgElement = document.getElementById('imageSrc');
     let inputElement = document.getElementById('fileInput');
+    let outputElement = document.getElementById('canvasOutput');
+    let downloadElement = document.getElementById('download');
     inputElement.addEventListener('change', (e) => {
       imgElement.src = URL.createObjectURL(e.target.files[0]);
+      grayscale();
     }, false);
     function grayscale(){
       let mat = cv.imread(imgElement);
@@ -83,6 +82,10 @@
       mat.delete();
       dst.delete();
     }
+    downloadElement.addEventListener('click', (e) => {
+      var base64 = outputElement.toDataURL("image/png");
+      document.getElementById("download").href = base64;
+    }, false);
     function onOpenCvReady() {
       document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
     }
