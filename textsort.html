@@ -68,7 +68,7 @@
     }
     function sort() {
       let val = input.value;
-      val2=val.split(/\r?\n/g).filter(isValid).sort().join("\r").trim();
+      val2=val.split(/\r?\n/g).filter(isValid).sort().join("\r");
       output.value =val2;
     }
     function pasteTextarea() {
