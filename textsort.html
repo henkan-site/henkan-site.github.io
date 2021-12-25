@@ -65,7 +65,7 @@
     });
     function sort() {
       let val = input.value;
-      val2=val.split(/\r?\n/g).sort().join("\r");
+      val2=val.split(/\r?\n/g).sort().join("\r").trim();
       output.value =val2;
     }
     function pasteTextarea() {
