@@ -53,7 +53,7 @@
   【入力】
     <img id="imageSrc" alt="No Image" style="display:none" />
     <input type="file" id="fileInput" name="file" />
-    <button onClick="grayscale()">グレイスケール変換</button>
+    <button id="grayscale" onClick="grayscale()" style="display:none">グレイスケール変換</button>
   </p>
   <p>
   【出力】
@@ -66,10 +66,12 @@
     let imgElement = document.getElementById('imageSrc');
     let inputElement = document.getElementById('fileInput');
     let outputElement = document.getElementById('canvasOutput');
+    let grayscaleElement = document.getElementById('grayscale');
     let downloadElement = document.getElementById('download');
     inputElement.addEventListener('change', (e) => {
       imgElement.src = URL.createObjectURL(e.target.files[0]);
       imgElement.style.display = "";
+      grayscaleElement.style.display = "";
     }, false);
     function grayscale(){
       let mat = cv.imread(imgElement);
