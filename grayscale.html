@@ -51,17 +51,14 @@
   <p>入力された画像をグレイスケールにする</p>
   <p>
   【入力】
-  <div class="inputoutput">
     <img id="imageSrc" alt="No Image" />
     <input type="file" id="fileInput" name="file" />
-  </div>
+    <button onClick="grayscale()">グレイスケール変換</button>
   </p>
   <p>
   【出力】
-  <div class="inputoutput">
     <canvas id="canvasOutput" ></canvas>
     <a id="download" href="#" download="canvas.png">ダウンロード</a>
-  </div>
   </p>
   <hr>
   ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
@@ -72,7 +69,6 @@
     let downloadElement = document.getElementById('download');
     inputElement.addEventListener('change', (e) => {
       imgElement.src = URL.createObjectURL(e.target.files[0]);
-      grayscale();
     }, false);
     function grayscale(){
       let mat = cv.imread(imgElement);
