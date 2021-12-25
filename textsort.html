@@ -63,12 +63,9 @@
     input.addEventListener('input', function (e) {
       sort();
     });
-    function isValid(value) {
-      return Boolean(value)||(value.length>0);
-    }
     function sort() {
       let val = input.value;
-      val2=val.split(/\r?\n/g).filter(isValid).sort().join("\r");
+      val2=val.split(/\r?\n/g).filter(function(value){return value.length>0;}).sort().join("\r");
       output.value =val2;
     }
     function pasteTextarea() {
