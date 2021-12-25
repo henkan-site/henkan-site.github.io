@@ -73,7 +73,7 @@
       imgElement.style.display = "";
       grayscaleElement.style.display = "";
     }, false);
-    function grayscale(){
+    function grayscale() {
       let mat = cv.imread(imgElement);
       var dst = new cv.Mat();
       cv.cvtColor(mat, dst, cv.COLOR_RGBA2GRAY, 0);
