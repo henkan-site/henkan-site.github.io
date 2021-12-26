@@ -83,7 +83,9 @@
       }
     }
     function icon() {
-      canvas.toBlob(blobCallback('passThisString'),
+      const ctx = outputElement.getContext("2d");
+      ctx.drawImage(imgElement,0,0);
+      canvasOutput.toBlob(blobCallback('passThisString'),
         'image/vnd.microsoft.icon',
         '-moz-parse-options:format=bmp;bpp=32'
       );
@@ -101,6 +103,5 @@
     var yyyy = date.getFullYear();
     document.getElementById("year").innerHTML = yyyy;
   </script>
-  <script async src="./lib/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
 </body>
 </html>
