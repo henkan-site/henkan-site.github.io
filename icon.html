@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGMRV1QCCF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LGMRV1QCCF');
+  </script>
+  <title>アイコン作成 - 変換サイト</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Nunito&display=swap" rel="stylesheet">  
+  <meta name="description" content="アイコン作成" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <style type="text/css">
+    body { 
+      background-color: #eeeeee;
+      color: #333333;
+      margin-right: auto;
+      margin-left: auto;
+      font-family: 'Nunito', 'Kosugi Maru', sans-serif;
+    }
+    .nounderbar {
+      color: #333333;
+      text-decoration: none;
+    }
+    textarea {
+      width: 95%;
+      height: calc( 1.3em * 15 );
+      line-height: 1.3em;
+    }
+    @media screen and (min-width: 481px) {
+      body{ 
+        width: 800px;
+      }
+    }
+    @media screen and (max-width: 480px) {
+      body{ 
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;アイコン作成</h1>
+  <hr>
+  <p>入力された画像からアイコンファイルを作成する</p>
+  <p>
+  【入力】
+    <img id="imageSrc" alt="No Image" style="display:none" src=""/>
+    <input type="file" id="fileInput" name="file" />
+    <button id="icon" onClick="icon()" style="display:none">アイコンに変換</button>
+  </p>
+  <p>
+  【出力】
+    <canvas id="canvasOutput" style="display:none"></canvas><br />
+    <a id="download" href="#" download="canvas.png" style="display:none">ダウンロード</a>
+  </p>
+  <hr>
+  ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
+  <script>
+    let imgElement = document.getElementById('imageSrc');
+    let inputElement = document.getElementById('fileInput');
+    let outputElement = document.getElementById('canvasOutput');
+    let iconElement = document.getElementById('icon');
+    let downloadElement = document.getElementById('download');
+    inputElement.addEventListener('change', (e) => {
+      imgElement.src = URL.createObjectURL(e.target.files[0]);
+      imgElement.style.display = "";
+      iconElement.style.display = "";
+    }, false);
+    function blobCallback(iconName) {
+      return function(b) {
+        var a = document.createElement('a');
+        a.textContent = 'Download';
+        document.body.appendChild(a);
+        a.style.display = 'block';
+        a.download = iconName + '.ico';
+        a.href = window.URL.createObjectURL(b);
+      }
+    }
+    function icon() {
+      canvas.toBlob(blobCallback('passThisString'),
+        'image/vnd.microsoft.icon',
+        '-moz-parse-options:format=bmp;bpp=32'
+      );
+      outputElement.style.display = "";
+      downloadElement.style.display = "";
+    }
+    downloadElement.addEventListener('click', (e) => {
+      var base64 = outputElement.toDataURL("image/png");
+      document.getElementById("download").href = base64;
+    }, false);
+    function onOpenCvReady() {
+      document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
+    }
+    var date = new Date();
+    var yyyy = date.getFullYear();
+    document.getElementById("year").innerHTML = yyyy;
+  </script>
+  <script async src="./lib/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+</body>
+</html>
