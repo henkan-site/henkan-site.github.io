@@ -57,15 +57,6 @@
         font-size: 16px;
     }
 
-    #calccontainer {
-        //margin-top: -20px;
-        //margin-bottom: 10px;
-        //zoom: .8;
-        //-moz-transform: scale(.8);
-        //margin-left: auto;
-        //text-align: center;
-    }
-
     #screen {
         z-index: 1;
         position: absolute;
@@ -235,99 +226,93 @@
   <p>TI-92 Emulator</p>
   <p>
 
-  <!-- <div class="container page-wrap" id="mainContent"> -->
+  <div>
+    <canvas id="screen">This emulator requires a browser with canvas support and Javascript enabled.</canvas>
+    <img id="calcimg" src="" usemap="#calcmap" ismap>
+    <map name="calcmap" id="calcmap"></map>
+  </div>
 
-    <!-- <div class="hero-unit"> -->
+  <div id="textandbuttons">
+    <div class="row-fluid wrapper">
 
-      <div id="calccontainer">
-        <canvas id="screen">This emulator requires a browser with canvas support and Javascript enabled.</canvas>
-        <img id="calcimg" src="" usemap="#calcmap" ismap>
-        <map name="calcmap" id="calcmap"></map>
+      <div class="actionsGroup">
+        <span>OS / ROM image :</span>
+        <input type="file" accept=".tib, .89u, .v2u, .92u, .rom" onchange="ui.loadrom()" id="romfile">
       </div>
 
-      <div id="textandbuttons">
-        <div class="row-fluid wrapper">
-
-          <div class="actionsGroup">
-            <span>OS / ROM image :</span>
-            <input type="file" accept=".tib, .89u, .v2u, .92u, .rom" onchange="ui.loadrom()" id="romfile">
-          </div>
-
-          <div class="actionsGroup">
-            <span>Emulator control :</span>
-            <div class="btn-group">
-              <button class="btn btn-small" type="button" id="pauseemulator" onclick="ui.pause_emulator()"><i class="icon-pause"></i>Pause</button>
-              <button class="btn btn-small" type="button" id="resumeemulator" style="display:none" onclick="ui.resume_emulator()"><i class="icon-play"></i>Resume</button>
-              <button class="btn btn-small" type="button" id="reset_calculator" onclick="emu.initialize_calculator()"><i class="icon-refresh"></i>Reset</button>
-            </div>
-            <br/>
-            <span>Emulator speed :</span>
-            <div class="btn-group">
-              <button class="btn btn-small" type="button" id="speedup" onclick="emu.increase_emulator_speed()"><i class="icon-chevron-up"></i>Speed up</button>
-              <button class="btn btn-small" type="button" id="slowdown" onclick="emu.decrease_emulator_speed()"><i class="icon-chevron-down"></i>Slow down</button>
-            </div>
-          </div>
-
-          <div class="actionsGroup">
-            <span>Skin zoom :</span>
-            <input id="skinZoom" type="range" value="0.8" min="0.5" max="2" step="0.1" onchange="updateSkinZoom(this.value)"/>
-            <br/>
-            <span>Skin type :</span>
-            <input type="radio" id="smallskin" name="skin_type" value="1" onclick="ui.setSkin(1)">Normal</input>&nbsp;&nbsp;&nbsp;
-            <input type="radio" id="largeskin" name="skin_type" value="2" onclick="ui.setSkin(2)">Big</input>
-          </div>
-
-          <div class="actionsGroup">
-            <span> <abbr title="Make sure to be on homescreen first">Send variable</abbr> :</span> <input type="file" onchange="ui.loadfile()" id="file"><br/>
-            <span>Transfers :</span>
-            <div class="btn-group">
-              <button class="btn btn-small" type="button" id="receivensButton" onclick="link.recvfile_ns()"><i class="icon-download-alt"></i>Start non-silent single file receive</button>
-              <button class="btn btn-small" type="button" id="downloadFileButton" onclick="link.getFileData()"><i class="icon-file"></i>Make data available</button>
-            </div>
-            <br/><a href="" id="downloadfile" style="display:none">Download created received data</a>
-          </div>
-
-          <div class="actionsGroup">
-            <span>Screenshot :</span>
-            <button class="btn btn-small" type="button" id="pngbutton" onclick="ui.getPNG()"><i class="icon-camera"></i>Capture screen</button>
-            <button class="btn btn-small" type="button" id="hidebutton" style="display:none" onclick="ui.pngButtons()"><i class="icon-remove"></i>Close screenshot</button>
-            <img id="pngimage" src=""><br/>
-            <!-- http://stackoverflow.com/a/16213045  -->
-          </div>
-
+      <div class="actionsGroup">
+        <span>Emulator control :</span>
+        <div class="btn-group">
+          <button class="btn btn-small" type="button" id="pauseemulator" onclick="ui.pause_emulator()"><i class="icon-pause"></i>Pause</button>
+          <button class="btn btn-small" type="button" id="resumeemulator" style="display:none" onclick="ui.resume_emulator()"><i class="icon-play"></i>Resume</button>
+          <button class="btn btn-small" type="button" id="reset_calculator" onclick="emu.initialize_calculator()"><i class="icon-refresh"></i>Reset</button>
         </div>
-
-        <br/><hr>
-
-        <div class="textDetails">
-          <p>In addition to clicking on the emulator itself, most keys are also mapped to computer keyboards. Use the backslash (\) key to activate the LOCK (hand) key on the emulated calculator, use
-            backquote (`) for 2nd, use F10 for SHIFT, and use F9 for F1. Use the numeric keypad for the + - * / symbols but the regular number keys to enter numbers. The - on the numeric keypad is the
-            plain - key; use the semicolon (;) key for the (-) key. All other keys either have the obvious mapping or not mapped to any computer key. This emulator is pre-loaded with a few of my games.
-            To run them just type a game name (monster, mercury, platinum, phoenix, smiley) and press enter.</p>
-
-          <hr>
-
-          <p>By default, the emulated calculator uses the open-source PedroM instead of the official TI system software. The PedroM source along with conversion scripts is available <a href=".">here</a>.</p>
-
-          <p>If you encounter serious problems with this emulator, such as it erases 100% of the data on your hard disk, please report to me by e-mail to
-            <a href="eeulplek@hotmail.com">eeulplek@hotmail.com</a> / <a href="lionel_debroux@yahoo.fr">lionel_debroux@yahoo.fr</a>,
-            on IRC (EFNet: #ti, #cemetech, #tcpa) or on message boards (Cemetech, TI-Planet). However, please note that this is a beta version so minor problems (such as erasing only 37% of your data)
-            are to be expected and thus are not worth reporting.</p>
-
-          <p>Thanks to Patrick Pelissier for having written Pedrom -- this emulator would never have been written without his open source ROM available to include with it. Also thanks to Lionel Debroux
-            for his many suggestions to improve this emulator -- but note that I haven't made use of all of them yet, so don't blame him if you find any bugs!</p>
-
-          <hr>
-
-          <p style="float:right">
-            <i>Page design by Adriweb</i>
-          </p>
+        <br/>
+        <span>Emulator speed :</span>
+        <div class="btn-group">
+          <button class="btn btn-small" type="button" id="speedup" onclick="emu.increase_emulator_speed()"><i class="icon-chevron-up"></i>Speed up</button>
+          <button class="btn btn-small" type="button" id="slowdown" onclick="emu.decrease_emulator_speed()"><i class="icon-chevron-down"></i>Slow down</button>
         </div>
       </div>
 
-    <!-- </div> -->
+      <!--
+      <div class="actionsGroup">
+        <span>Skin zoom :</span>
+        <input id="skinZoom" type="range" value="0.8" min="0.5" max="2" step="0.1" onchange="updateSkinZoom(this.value)"/>
+        <br/>
+        <span>Skin type :</span>
+        <input type="radio" id="smallskin" name="skin_type" value="1" onclick="ui.setSkin(1)">Normal</input>&nbsp;&nbsp;&nbsp;
+        <input type="radio" id="largeskin" name="skin_type" value="2" onclick="ui.setSkin(2)">Big</input>
+      </div>
+      -->
 
-  <!-- </div> -->
+      <div class="actionsGroup">
+        <span> <abbr title="Make sure to be on homescreen first">Send variable</abbr> :</span> <input type="file" onchange="ui.loadfile()" id="file"><br/>
+        <span>Transfers :</span>
+        <div class="btn-group">
+          <button class="btn btn-small" type="button" id="receivensButton" onclick="link.recvfile_ns()"><i class="icon-download-alt"></i>Start non-silent single file receive</button>
+          <button class="btn btn-small" type="button" id="downloadFileButton" onclick="link.getFileData()"><i class="icon-file"></i>Make data available</button>
+        </div>
+        <br/><a href="" id="downloadfile" style="display:none">Download created received data</a>
+      </div>
+
+      <div class="actionsGroup">
+        <span>Screenshot :</span>
+        <button class="btn btn-small" type="button" id="pngbutton" onclick="ui.getPNG()"><i class="icon-camera"></i>Capture screen</button>
+        <button class="btn btn-small" type="button" id="hidebutton" style="display:none" onclick="ui.pngButtons()"><i class="icon-remove"></i>Close screenshot</button>
+        <img id="pngimage" src=""><br/>
+        <!-- http://stackoverflow.com/a/16213045  -->
+      </div>
+
+    </div>
+
+    <br/><hr>
+
+    <div class="textDetails">
+      <p>In addition to clicking on the emulator itself, most keys are also mapped to computer keyboards. Use the backslash (\) key to activate the LOCK (hand) key on the emulated calculator, use
+        backquote (`) for 2nd, use F10 for SHIFT, and use F9 for F1. Use the numeric keypad for the + - * / symbols but the regular number keys to enter numbers. The - on the numeric keypad is the
+        plain - key; use the semicolon (;) key for the (-) key. All other keys either have the obvious mapping or not mapped to any computer key. This emulator is pre-loaded with a few of my games.
+        To run them just type a game name (monster, mercury, platinum, phoenix, smiley) and press enter.</p>
+
+      <hr>
+
+      <p>By default, the emulated calculator uses the open-source PedroM instead of the official TI system software. The PedroM source along with conversion scripts is available <a href=".">here</a>.</p>
+
+      <p>If you encounter serious problems with this emulator, such as it erases 100% of the data on your hard disk, please report to me by e-mail to
+        <a href="eeulplek@hotmail.com">eeulplek@hotmail.com</a> / <a href="lionel_debroux@yahoo.fr">lionel_debroux@yahoo.fr</a>,
+        on IRC (EFNet: #ti, #cemetech, #tcpa) or on message boards (Cemetech, TI-Planet). However, please note that this is a beta version so minor problems (such as erasing only 37% of your data)
+        are to be expected and thus are not worth reporting.</p>
+
+      <p>Thanks to Patrick Pelissier for having written Pedrom -- this emulator would never have been written without his open source ROM available to include with it. Also thanks to Lionel Debroux
+        for his many suggestions to improve this emulator -- but note that I haven't made use of all of them yet, so don't blame him if you find any bugs!</p>
+
+      <hr>
+
+      <p style="float:right">
+        <i>Page design by Adriweb</i>
+      </p>
+    </div>
+  </div>
 
 </body>
 </html>
