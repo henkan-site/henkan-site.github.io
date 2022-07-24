@@ -1,0 +1,98 @@
+h2 {
+    text-align: center;
+}
+
+#mainContent {
+    width: 80%;
+    min-width: 1080px;
+}
+
+.hero-unit {
+    font-size: 16px;
+}
+
+#calccontainer {
+    margin-top: -20px;
+    margin-bottom: 10px;
+    zoom: .8;
+    -moz-transform: scale(.8);
+    margin-left: auto;
+    text-align: center;
+}
+
+#screen {
+    z-index: 1;
+    position: absolute;
+    /*margin-left: 208px;*/
+    /*margin-top: 52px;*/
+}
+
+#calcimg {
+    position: relative;
+    top: 0;
+    left: 0;
+    user-select: none;
+}
+
+#textandbuttons div.wrapper {
+    width: 90%;
+    margin-left: auto;
+}
+
+div.actionsGroup {
+    padding-bottom: 1px;
+    padding-left: 10px;
+    border-left: 1px solid black;
+    margin-top: 20px;
+    width: 45%;
+    float: left;
+}
+
+div.actionsGroup span {
+    display: inline-block;
+    width: 140px;
+}
+
+button.btn i {
+    margin-right: 5px;
+    margin-left: -1px;
+}
+
+label {
+    display: inline-block;
+}
+
+/* Chrome-only layout bugfix */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type="file"] {
+        line-height: 0 !important;
+        padding-top: 5px !important;
+        margin-top: -2px !important;
+    }
+}
+
+input[type="radio"] {
+    margin-top: -1px !important;
+    margin-right: 5px !important;
+}
+
+input[type="range"] {
+    position: relative;
+    margin-bottom: 10px;
+}
+input[type="range"]:after, input[type="range"]:before {
+    position: absolute;
+    top: 1em;
+}
+input[type="range"]:before {
+    left:0;
+    content: attr(min);
+}
+input[type="range"]:after {
+    right: 0;
+    content: attr(max);
+}
+
+div.textDetails {
+    line-height: 20px;
+}
