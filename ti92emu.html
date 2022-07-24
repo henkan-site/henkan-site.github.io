@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGMRV1QCCF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LGMRV1QCCF');
+  </script>
+  <title>TI-92 Emulator - 変換サイト</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Nunito&display=swap" rel="stylesheet">  
+  <meta name="description" content="TI-92 Emulator" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <style type="text/css">
+    body { 
+      background-color: #eeeeee;
+      color: #333333;
+      margin-right: auto;
+      margin-left: auto;
+      font-family: 'Nunito', 'Kosugi Maru', sans-serif;
+    }
+    .nounderbar {
+      color: #333333;
+      text-decoration: none;
+    }
+    textarea {
+      width: 100%;
+      max-width: 100%;
+      height: calc( 1.3em * 5 );
+      line-height: 1.3;      
+    }
+    @media screen and (min-width: 481px) {
+      body{ 
+        width: 800px;
+      }
+    }
+    @media screen and (max-width: 480px) {
+      body{ 
+        width: 90%;
+      }
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+  <link rel="stylesheet" href="css/main.css" type="text/css"/>
+
+  <script type="text/javascript" src="lib/v12_readable.js"></script>
+
+  <script type="text/javascript">
+        var emu = TI68kEmulatorCoreModule(window);
+        var ui = TI68kEmulatorUIModule(window);
+        var link = TI68kEmulatorLinkModule(window);
+    </script>
+
+  <script type="text/javascript" src="lib/v12rom.js"></script>
+  <script type="text/javascript" src="lib/v12sav.js"></script>
+
+  <script type="text/javascript">
+        if (emu.apiversion() != 1) {
+            throw "API version has changed, the script may have to be updated";
+        }
+        if (typeof(rom) === "object") {
+            emu.setRom(rom);
+        }
+        emu.setReset(reset);
+        ui.setEmu(emu);
+        ui.setLink(link);
+        emu.setUI(ui);
+        emu.setLink(link);
+        link.setEmu(emu);
+        link.setUI(ui);
+
+        // Here, you could call a bunch of set_elementid_* functions on ui, e.g. set_elementid_calcimg(), to link your document's element IDs with the script.
+        // But that's optional if you use the same element IDs as the ones in this reference HTML page.
+        // You can also call set_display_no_rom_loaded() on UI if you don't like alert() as a way to tell the user that no ROM / OS upgrade is loaded.
+
+        function sendKey(key)
+        {
+            if (key === '(' || key === ')') {
+                emu.setKey((key === '(') ? 37 : 38, 1);
+            } else {
+                var e = new Event("keydown");
+                e.key     = key.toUpperCase();
+                e.keyCode = e.key.charCodeAt(0);
+                e.which   = e.keyCode;
+                document.dispatchEvent(e);
+            }
+            setTimeout(function () {
+                if (key === '(' || key === ')') {
+                    emu.setKey((key === '(') ? 37 : 38, 0);
+                } else {
+                    var e = new Event("keyup");
+                    e.key     = key.toUpperCase();
+                    e.keyCode = e.key.charCodeAt(0);
+                    e.which   = e.keyCode;
+                    document.dispatchEvent(e);
+                }
+                //console.log("sent key: " + key);
+            }, 100);
+        }
+
+        function handlekeys()
+        {
+            var toType = document.location.hash.substr(1);
+
+            //toType = toType.replace(/([()])/g, '↑$1↓');
+
+            if (toType.length > 0)
+            {
+                console.log("string to type: " + toType);
+
+                setTimeout(function() {
+                    for (var i=0, delay=0; i < toType.length; delay+=250, i++)
+                    {
+                        (function(char, delay) {
+                            setTimeout(function() { sendKey(char); }, delay);
+                        })(toType[i], delay);
+                    }
+                }, 5000);
+
+                // Enter at the end
+                setTimeout(function () { emu.setKey(73, 1); }, 5000 + toType.length * 350 + 50);
+                setTimeout(function () { emu.setKey(73, 0); }, 5000 + toType.length * 350 + 50 + 100);
+            }
+
+        }
+    </script>
+</head>
+<body class="bootstrap" onload="emu.initemu(); handlekeys();">
+
+  <h1><a href="https://henkan.site/" class="nounderbar">変換サイト</a>&nbsp;-&nbsp;TI-92 Emulator</h1>
+  <hr>
+  <p>TI-92 Emulator</p>
+  <p>
+
+  <div class="container page-wrap" id="mainContent">
+
+    <div class="hero-unit">
+
+      <div id="calccontainer">
+        <canvas id="screen">This emulator requires a browser with canvas support and Javascript enabled.</canvas>
+        <img id="calcimg" src="" usemap="#calcmap" ismap>
+        <map name="calcmap" id="calcmap"></map>
+      </div>
+
+      <div id="textandbuttons">
+        <div class="row-fluid wrapper">
+
+          <div class="actionsGroup">
+            <span>OS / ROM image :</span>
+            <input type="file" accept=".tib, .89u, .v2u, .92u, .rom" onchange="ui.loadrom()" id="romfile">
+          </div>
+
+          <div class="actionsGroup">
+            <span>Emulator control :</span>
+            <div class="btn-group">
+              <button class="btn btn-small" type="button" id="pauseemulator" onclick="ui.pause_emulator()"><i class="icon-pause"></i>Pause</button>
+              <button class="btn btn-small" type="button" id="resumeemulator" style="display:none" onclick="ui.resume_emulator()"><i class="icon-play"></i>Resume</button>
+              <button class="btn btn-small" type="button" id="reset_calculator" onclick="emu.initialize_calculator()"><i class="icon-refresh"></i>Reset</button>
+            </div>
+            <br/>
+            <span>Emulator speed :</span>
+            <div class="btn-group">
+              <button class="btn btn-small" type="button" id="speedup" onclick="emu.increase_emulator_speed()"><i class="icon-chevron-up"></i>Speed up</button>
+              <button class="btn btn-small" type="button" id="slowdown" onclick="emu.decrease_emulator_speed()"><i class="icon-chevron-down"></i>Slow down</button>
+            </div>
+          </div>
+
+          <div class="actionsGroup">
+            <span>Skin zoom :</span>
+            <input id="skinZoom" type="range" value="0.8" min="0.5" max="2" step="0.1" onchange="updateSkinZoom(this.value)"/>
+            <br/>
+            <span>Skin type :</span>
+            <input type="radio" id="smallskin" name="skin_type" value="1" onclick="ui.setSkin(1)">Normal</input>&nbsp;&nbsp;&nbsp;
+            <input type="radio" id="largeskin" name="skin_type" value="2" onclick="ui.setSkin(2)">Big</input>
+          </div>
+
+          <div class="actionsGroup">
+            <span> <abbr title="Make sure to be on homescreen first">Send variable</abbr> :</span> <input type="file" onchange="ui.loadfile()" id="file"><br/>
+            <span>Transfers :</span>
+            <div class="btn-group">
+              <button class="btn btn-small" type="button" id="receivensButton" onclick="link.recvfile_ns()"><i class="icon-download-alt"></i>Start non-silent single file receive</button>
+              <button class="btn btn-small" type="button" id="downloadFileButton" onclick="link.getFileData()"><i class="icon-file"></i>Make data available</button>
+            </div>
+            <br/><a href="" id="downloadfile" style="display:none">Download created received data</a>
+          </div>
+
+          <div class="actionsGroup">
+            <span>Screenshot :</span>
+            <button class="btn btn-small" type="button" id="pngbutton" onclick="ui.getPNG()"><i class="icon-camera"></i>Capture screen</button>
+            <button class="btn btn-small" type="button" id="hidebutton" style="display:none" onclick="ui.pngButtons()"><i class="icon-remove"></i>Close screenshot</button>
+            <img id="pngimage" src=""><br/>
+            <!-- http://stackoverflow.com/a/16213045  -->
+          </div>
+
+        </div>
+
+        <br/><hr>
+
+        <div class="textDetails">
+          <p>In addition to clicking on the emulator itself, most keys are also mapped to computer keyboards. Use the backslash (\) key to activate the LOCK (hand) key on the emulated calculator, use
+            backquote (`) for 2nd, use F10 for SHIFT, and use F9 for F1. Use the numeric keypad for the + - * / symbols but the regular number keys to enter numbers. The - on the numeric keypad is the
+            plain - key; use the semicolon (;) key for the (-) key. All other keys either have the obvious mapping or not mapped to any computer key. This emulator is pre-loaded with a few of my games.
+            To run them just type a game name (monster, mercury, platinum, phoenix, smiley) and press enter.</p>
+
+          <hr>
+
+          <p>By default, the emulated calculator uses the open-source PedroM instead of the official TI system software. The PedroM source along with conversion scripts is available <a href=".">here</a>.</p>
+
+          <p>If you encounter serious problems with this emulator, such as it erases 100% of the data on your hard disk, please report to me by e-mail to
+            <a href="eeulplek@hotmail.com">eeulplek@hotmail.com</a> / <a href="lionel_debroux@yahoo.fr">lionel_debroux@yahoo.fr</a>,
+            on IRC (EFNet: #ti, #cemetech, #tcpa) or on message boards (Cemetech, TI-Planet). However, please note that this is a beta version so minor problems (such as erasing only 37% of your data)
+            are to be expected and thus are not worth reporting.</p>
+
+          <p>Thanks to Patrick Pelissier for having written Pedrom -- this emulator would never have been written without his open source ROM available to include with it. Also thanks to Lionel Debroux
+            for his many suggestions to improve this emulator -- but note that I haven't made use of all of them yet, so don't blame him if you find any bugs!</p>
+
+          <hr>
+
+          <p style="float:right">
+            <i>Page design by Adriweb</i>
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
