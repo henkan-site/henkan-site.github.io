@@ -59,22 +59,25 @@
   ©&nbsp;<span id="year"></span>&nbsp;<a href="https://henkan.site/" class="nounderbar">henkan.site</a>&nbsp;<a href="https://github.com/henkan-site/henkan-site.github.io" class="nounderbar">Powered by GitHub Pages</a>&nbsp;<a href="https://henkan.site/privacy.html" class="nounderbar">プライバシー</a>
   <script>
     const input = document.getElementById('input');
-    var music = new Audio('./sounds/alarm.mp3');
+    var sound = new Audio();
     var timerId = 0;
     function start1() {
-      //music.stop();
       clearInterval(timerId);
+      sound.pause();
+      sound.currentTime = 0;
       timerId = setInterval(countdown1,1000);
     }
     function stop1() {
       clearInterval(timerId);
-      music.stop();
+      sound.pause();
+      sound.currentTime = 0;
     }
     function countdown1() {
       input.value = String(Math.max(Number(input.value) - 1, 0));
-      if (input.value == "0") {
+      if (input.value == '0') {
         clearInterval(timerId);
-        music.play();
+        sound.src = './sounds/alarm.mp3';
+        sound.play();
       }
     }
     var date = new Date();
