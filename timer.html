@@ -69,9 +69,11 @@
     function stop1() {
       clearInterval(timerId);
       sound.pause();
+      document.title = 'タイマー - 変換サイト';
     }
     function countdown1() {
       input.value = String(Math.max(Number(input.value) - 1, 0));
+      document.title = '(' + input.value + ')タイマー - 変換サイト';
       if (input.value == '0') {
         clearInterval(timerId);
 　      sound.currentTime = 0;
