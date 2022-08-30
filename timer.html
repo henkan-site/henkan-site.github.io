@@ -51,7 +51,7 @@
   <p>指定された秒数をカウントダウンします。</p>
   <p>
   【入力】
-  <textarea id="input" placeholder="秒数を入力してください。">180</textarea>
+  <textarea id="input" placeholder="秒数を入力してください。" onkeypress="onTestChange()">180</textarea>
   <button onclick="start1()">Start</button>
   <button onclick="stop1()">Stop</button>
   </p>
@@ -76,6 +76,16 @@
         clearInterval(timerId);
 　      sound.currentTime = 0;
         sound.play();
+      }
+    }
+    function onTestChange() {
+      var key = window.event.keyCode;
+      // If the user has pressed enter
+      if (key === 13) {
+        start1();
+        return false;
+      } else {
+        return true;
       }
     }
     var date = new Date();
