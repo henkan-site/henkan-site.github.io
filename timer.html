@@ -76,7 +76,8 @@
       document.title = '(' + input.value + ')タイマー - 変換サイト';
       if (input.value == '0') {
         clearInterval(timerId);
-　      sound.currentTime = 0;
+        sound.currentTime = 0;
+        sound.loop = true;
         sound.play();
       }
     }
