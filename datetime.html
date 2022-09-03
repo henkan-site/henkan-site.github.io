@@ -79,7 +79,8 @@
       const seconds = dt.getUTCSeconds();
       return `${year}-${pad(month, 2)}-${pad(days, 2)}T${pad(hours, 2)}:${pad(minutes, 2)}:${pad(seconds, 2)}Z`;
     };
-    var date = new Date().toLocaleString({ timeZone: 'Asia/Tokyo' });
+    const japanStandardTime = new Date().toLocaleString({ timeZone: 'Asia/Tokyo' });
+    const date = new Date(japanStandardTime);
     const isoStr = toISOStringSec(date) + '+09:00';
     datetime.value = isoStr;
     var yyyy = date.getFullYear();
