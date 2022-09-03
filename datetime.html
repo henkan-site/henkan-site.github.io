@@ -51,7 +51,7 @@
   <p>現在の時刻をISO8601形式で表す。</p>
   <p>
   【出力】
-  <input id="datetime" type="text" readonly="readonly"/>
+  <input id="datetime" type="text" onfocus="this.select();"/>
   <button onclick="copy()">Copy</button>
   </p>
   <hr>
@@ -87,6 +87,7 @@
     document.getElementById("year").innerHTML = yyyy;
     window.onload = function() {
       datetime.focus();
+      datetime.setSelectionRange(0, 99999);
     }    
   </script>
 </body>
