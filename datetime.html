@@ -77,7 +77,7 @@
       const hours = dt.getUTCHours();
       const minutes = dt.getUTCMinutes();
       const seconds = dt.getUTCSeconds();
-      return `${year}-${pad(month, 2)}-${pad(days, 2)}T${pad(hours, 2)}:${pad(minutes, 2)}:${pad(seconds, 2)}Z`;
+      return `${year}-${pad(month, 2)}-${pad(days, 2)}T${pad(hours, 2)}:${pad(minutes, 2)}:${pad(seconds, 2)}`;
     };
     const japanStandardTime = new Date().toLocaleString({ timeZone: 'Asia/Tokyo' });
     const date = new Date(japanStandardTime);
