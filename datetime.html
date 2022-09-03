@@ -71,12 +71,12 @@
         }
         return (p + String(val)).slice(-1 * len);
       };
-      const year = dt.getUTCFullYear();
-      const month = dt.getUTCMonth() + 1;
-      const days = dt.getUTCDate();
-      const hours = dt.getUTCHours();
-      const minutes = dt.getUTCMinutes();
-      const seconds = dt.getUTCSeconds();
+      const year = dt.getFullYear();
+      const month = dt.getMonth() + 1;
+      const days = dt.getDate();
+      const hours = dt.getHours();
+      const minutes = dt.getMinutes();
+      const seconds = dt.getSeconds();
       return `${year}-${pad(month, 2)}-${pad(days, 2)}T${pad(hours, 2)}:${pad(minutes, 2)}:${pad(seconds, 2)}`;
     };
     const japanStandardTime = new Date().toLocaleString({ timeZone: 'Asia/Tokyo' });
